@@ -5,10 +5,10 @@ trait Iplayer {
   def getName(): String
   def remainingJewels(): Int
   def currentHand(): Set[Card]
-  def playCard(): Unit
-  def getCard():Unit
+  def playCard(C:Card): Unit
+  def takeCard(n:Int):Unit
 
-  /**def boardSide():*/
+  /*def boardSide():*/
 }
 
 class Player {
