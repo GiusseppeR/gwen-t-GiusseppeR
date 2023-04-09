@@ -3,8 +3,10 @@ package gwent
 
 trait Iplayer {
   def getName: String
-  def remainingJewels: Int
-  def currentHand: Set[Card]
+  def getDeckSize: Int
+  def remainingGems: Int
+  def takeDamage:Unit
+  def currentHand: Array[Card]
   def playCard(C:Card): Unit
   def takeCard(n:Int):Unit
 
