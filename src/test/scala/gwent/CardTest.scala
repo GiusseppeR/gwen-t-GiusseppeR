@@ -8,7 +8,7 @@ class CardTest extends FunSuite {
   var Card2: Card = _
   var Card3: Card = _
 
-  override beforeEach(context:BeforeEach):Unit = {
+  override def beforeEach(context:BeforeEach):Unit = {
     Card1 = new Card("The Emperor")
     Card2 = new Card("The Sun")
     Card3 = new Card("The Tower")
