@@ -5,20 +5,21 @@ trait ICard{
   def getName:String
 }
 
-abstract class Card{
+abstract class Card(private val name:String){
+  def getName() = ""
 }
-abstract class UnitCard extends Card{
+abstract class UnitCard(name:String, private var SP:Int) extends Card(name){
+  def getSP():Int = 0
+}
+class CloseCombat(name:String,SP:Int) extends UnitCard(name,SP){
 
 }
-class CloseCombat extends UnitCard{
+class Siege(name:String,SP:Int) extends UnitCard(name,SP){
 
 }
-class Siege extends UnitCard{
+class Range(name:String,SP:Int) extends UnitCard(name,SP) {
 
 }
-class Range extends UnitCard {
-
-}
-class WeatherCard extends Card{
+class WeatherCard(name:String) extends Card(name){
 
 }

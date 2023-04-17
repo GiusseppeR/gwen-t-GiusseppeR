@@ -36,24 +36,17 @@ class PlayerTest extends FunSuite {
     Card11 = new WeatherCard("11")
 
     Deck1 = Array(Card1, Card1, Card3, Card3, Card4, Card5, Card6, Card8, Card11, Card9, Card9)
-    Deck2 = Array(Card1, Card2, Card3, Card4, Card5, Card6, Card7, Card8, Card9, Card10, Card11)
+    Deck2 = Array(Card1, Card2, Card3, Card4, Card5, Card6, Card7, Card8, Card9, Card11, Card11)
 
     Player1 = new Player("Jotaro", Deck1)
     Player2 = new Player("D'Arby", Deck2)
   }
   test("Players should have a name"){
-    assertEquals(Player1.getname(), "Jotaro")
-    assertEquals(Player2.getname(), "D'Arby")
+    assertEquals(Player1.getName(), "Jotaro")
+    assertEquals(Player2.getName(), "D'Arby")
   }
   test("The deck size of the players should decrease by 10 when the class is created"){
     val expected = 1
-    assertEquals(Player1.getDeckSize(), expected)
-    assertEquals(Player2.getDeckSize(), expected)
-  }
-  test("The deck size of the players should decrease in size when they take cards") {
-    val expected = 0
-    Player1.takeCard(1)
-    Player2.takeCard(1)
     assertEquals(Player1.getDeckSize(), expected)
     assertEquals(Player2.getDeckSize(), expected)
   }
@@ -76,11 +69,21 @@ class PlayerTest extends FunSuite {
     assertEquals(Player1.currentHand().length, expected)
     assertEquals(Player2.currentHand().length, expected)
   }
+  test("The deck size of the players should decrease in size when they take cards") {
+    val expected = 0
+
+    Player1.playCard(Card1)
+    Player2.playCard(Card11)
+    Player1.takeCard(1)
+    Player2.takeCard(1)
+    assertEquals(Player1.getDeckSize(), expected)
+    assertEquals(Player2.getDeckSize(), expected)
+  }
   test("Players shouldn't be able to take more cards than the amount available in the deck"){
     val expected = 9
-    Player1.playCard()
-    Player1.playCard()
-    Player1.takeCard(3)
+    Player1.playCard(Card1)
+    Player1.playCard(Card3)
+    Player1.takeCard(2)
     assertEquals(Player1.currentHand().length, expected)
 
   }
