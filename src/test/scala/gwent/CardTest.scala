@@ -62,3 +62,20 @@ class RangeTest extends FunSuite {
   }
 }
 
+class WeatherTest extends FunSuite {
+  override def beforeEach(context:BeforeEach):Unit = {
+    Card1 = new Weather("The Sun")
+    Card2 = new Weather("Judgement")
+  }
+  test("A Weather card should have a name"){
+    assertEquals(Card1.getName(), "The Sun")
+    assertEquals(Card2.getName(), "Judgement")
+  }
+  test("Two Weather cards are equivalent if they have the same name"){
+    val Sun_2 = new Weather("The Sun")
+
+    assertEquals(Card1, Hierophant_2)
+    assert(!Card1.equals(Card2))
+  }
+}
+
