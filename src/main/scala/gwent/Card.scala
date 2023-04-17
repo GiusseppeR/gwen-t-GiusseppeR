@@ -3,14 +3,23 @@ package gwent
 
 trait ICard{
   def getName:String
-
-  /* For the EP1, we do not consider aspects related to type and board placement
-  def getType:String
-  def getEffect:String
-  def goToPosition():Unit */
-
 }
 
-class Card {
+abstract class Card {
+
+}
+abstract class UnitCard extends Card{
+
+}
+class CloseCombat extends UnitCard{
+
+}
+class Siege extends UnitCard{
+
+}
+class Range extends UnitCard {
+
+}
+class WeatherCard extends Card{
 
 }
