@@ -5,8 +5,7 @@ trait ICard{
   def getName:String
 }
 
-abstract class Card {
-
+abstract class Card{
 }
 abstract class UnitCard extends Card{
 
