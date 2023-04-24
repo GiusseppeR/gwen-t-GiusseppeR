@@ -6,10 +6,10 @@ trait ICard{
 }
 
 abstract class Card(private val name:String){
-  def getName() = ""
+  def getName() = name
 }
 abstract class UnitCard(name:String, private var SP:Int) extends Card(name){
-  def getSP():Int = 0
+  def getSP():Int = SP
 }
 class CloseCombat(name:String,SP:Int) extends UnitCard(name,SP){
 

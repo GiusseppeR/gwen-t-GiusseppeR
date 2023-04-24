@@ -3,6 +3,8 @@ package gwent
 
 import munit.FunSuite
 
+import scala.collection.mutable.ArrayBuffer
+
 class PlayerTest extends FunSuite {
   var Card1: Card = _
   var Card2: Card = _
@@ -16,8 +18,8 @@ class PlayerTest extends FunSuite {
   var Card10: Card = _
   var Card11: Card = _
 
-  var Deck1: Array[Card] =_
-  var Deck2: Array[Card] =_
+  var Deck1: ArrayBuffer[Card] =_
+  var Deck2: ArrayBuffer[Card] =_
 
   var Player1: Player =_
   var Player2: Player =_
@@ -35,8 +37,8 @@ class PlayerTest extends FunSuite {
     Card10 = new WeatherCard("10")
     Card11 = new WeatherCard("11")
 
-    Deck1 = Array(Card1, Card1, Card3, Card3, Card4, Card5, Card6, Card8, Card11, Card9, Card9)
-    Deck2 = Array(Card1, Card2, Card3, Card4, Card5, Card6, Card7, Card8, Card9, Card11, Card11)
+    Deck1 = ArrayBuffer(Card1, Card1, Card3, Card3, Card4, Card5, Card6, Card8, Card11, Card9, Card9)
+    Deck2 = ArrayBuffer(Card1, Card2, Card3, Card4, Card5, Card6, Card7, Card8, Card9, Card11, Card11)
 
     Player1 = new Player("Jotaro", Deck1)
     Player2 = new Player("D'Arby", Deck2)

@@ -1,17 +1,20 @@
 package cl.uchile.dcc
 package gwent
 
+import scala.collection.mutable.ArrayBuffer
+
 trait Iplayer {
   def getName: String
   def getDeckSize: Int
+  def shuffleDeck: Unit
   def remainingGems: Int
   def takeDamage:Unit
-  def currentHand: Array[Card]
+  def currentHand: ArrayBuffer[Card]
   def playCard(C:Card): Unit
   def takeCard(n:Int):Unit
 }
 
-class Player(private val name:String, private var deck:Array[Card]) {
+class Player(private val name:String, private var deck:ArrayBuffer[Card]) {
   def getName() = ""
   def getDeckSize() = 0
   def remainingGems() = 0
