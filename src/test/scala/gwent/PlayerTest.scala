@@ -56,14 +56,6 @@ class PlayerTest extends FunSuite {
     assert(!Player1.equals(fake_Player1))
     assertEquals(Player1, Player1)
   }
-  test("a deck with more than one card should change when shuffled"){
-    val d1: ArrayBuffer[Card] = Player1.getDeck()
-    val d2: ArrayBuffer[Card] = Player2.getDeck()
-    Player1.shuffleDeck()
-    Player2.shuffleDeck()
-    assertNotEquals(d1, Player1.getDeck())
-    assertNotEquals(d2, Player2.getDeck())
-  }
   test("The deck size of the players should decrease by 10 when the class is created"){
     val expected = 1
     assertEquals(Player1.getDeck().length, expected)

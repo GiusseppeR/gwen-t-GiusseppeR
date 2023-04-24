@@ -2,11 +2,11 @@ package cl.uchile.dcc
 package gwent
 
 import scala.collection.mutable.ArrayBuffer
+import scala.util.Random
 
 trait Iplayer {
   def getName(): String
   def getDeck(): ArrayBuffer[Card]
-  def shuffleDeck():Unit
   def remainingGems(): Int
   def takeDamage():Unit
   def currentHand(): ArrayBuffer[Card]
@@ -15,20 +15,50 @@ trait Iplayer {
 }
 
 class Player(private val name:String, private var deck:ArrayBuffer[Card]) extends Iplayer {
-  def getName() = ""
-  def getDeck() = ArrayBuffer(new CloseCombat("",0),new CloseCombat("",0))
-  def shuffleDeck(): Unit = {
+  private var Gems: Int = 2
+  private var Hand: ArrayBuffer[Card] = ArrayBuffer()
 
-  }
-  def remainingGems() = -100
-  def takeDamage() = {
+  override def getName(): String = name
 
-  }
-  def currentHand() = deck
-  def playCard(C:Card) = {
+  override def getDeck(): ArrayBuffer[Card] = deck
 
+  private def shuffleDeck(): Unit = {
+    Random.shuffle(deck)
   }
-  def takeCard(n:Int) = {
 
+  override def remainingGems(): Int = Gems
+
+  override def takeDamage(): Unit = {
+    Gems = Gems - 1
   }
+
+  override def currentHand(): ArrayBuffer[Card] = Hand
+
+  def playCard(C: Card): Unit = {
+    this.currentHand() -= C
+  }
+
+  def takeCard(n: Int): Unit = {
+    val handSize:Int = this.currentHand().length
+    val deckLast = this.getDeck().length-1
+    var slice: ArrayBuffer[Card] = ArrayBuffer()
+    var k:Int = n
+    if( n > deckLast+1 ){
+      k = deckLast+1-n
+    }
+    if(k+handSize > 10){
+      k = 10-handSize
+    }
+    if (deckLast == 0 && k !=0){
+      slice = getDeck()
+    } else {
+      slice = deck.slice(deckLast - k, deckLast)
+    }
+    this.currentHand() ++= slice
+    this.getDeck() --= slice
+  }
+
+  this.shuffleDeck()
+  this.takeCard(10)
+
 }
