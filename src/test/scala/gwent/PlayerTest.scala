@@ -43,21 +43,31 @@ class PlayerTest extends FunSuite {
     Player1 = new Player("Jotaro", Deck1)
     Player2 = new Player("D'Arby", Deck2)
   }
-  test("Players should have a name"){
+  test("Players should have a name and a deck"){
     assertEquals(Player1.getName(), "Jotaro")
     assertEquals(Player2.getName(), "D'Arby")
+
+    assertEquals(Player1.getDeck(), Deck1)
+    assertEquals(Player2.getDeck(),Deck2)
   }
   test("Players are only equal to themselves"){
-    val fake_Player1 = new Player("Jotaro",Deck1)
+    val fake_Player1: Player = new Player("Jotaro", Deck1)
     assert(!Player1.equals(Player2))
     assert(!Player1.equals(fake_Player1))
     assertEquals(Player1, Player1)
-
+  }
+  test("a deck with more than one card should change when shuffled"){
+    val d1: ArrayBuffer[Card] = Player1.getDeck()
+    val d2: ArrayBuffer[Card] = Player2.getDeck()
+    Player1.shuffleDeck()
+    Player2.shuffleDeck()
+    assertNotEquals(d1, Player1.getDeck())
+    assertNotEquals(d2, Player2.getDeck())
   }
   test("The deck size of the players should decrease by 10 when the class is created"){
     val expected = 1
-    assertEquals(Player1.getDeckSize(), expected)
-    assertEquals(Player2.getDeckSize(), expected)
+    assertEquals(Player1.getDeck().length, expected)
+    assertEquals(Player2.getDeck().length, expected)
   }
   test("The starting hand of the players should have 10 cards"){
     val expected = 10
@@ -85,8 +95,8 @@ class PlayerTest extends FunSuite {
     Player2.playCard(Card11)
     Player1.takeCard(1)
     Player2.takeCard(1)
-    assertEquals(Player1.getDeckSize(), expected)
-    assertEquals(Player2.getDeckSize(), expected)
+    assertEquals(Player1.getDeck().length, expected)
+    assertEquals(Player2.getDeck().length, expected)
   }
   test("Players shouldn't be able to take more cards than the amount available in the deck"){
     val expected = 9

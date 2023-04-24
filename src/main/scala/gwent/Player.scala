@@ -4,20 +4,23 @@ package gwent
 import scala.collection.mutable.ArrayBuffer
 
 trait Iplayer {
-  def getName: String
-  def getDeckSize: Int
-  def shuffleDeck: Unit
-  def remainingGems: Int
-  def takeDamage:Unit
-  def currentHand: ArrayBuffer[Card]
+  def getName(): String
+  def getDeck(): ArrayBuffer[Card]
+  def shuffleDeck():Unit
+  def remainingGems(): Int
+  def takeDamage():Unit
+  def currentHand(): ArrayBuffer[Card]
   def playCard(C:Card): Unit
   def takeCard(n:Int):Unit
 }
 
-class Player(private val name:String, private var deck:ArrayBuffer[Card]) {
+class Player(private val name:String, private var deck:ArrayBuffer[Card]) extends Iplayer {
   def getName() = ""
-  def getDeckSize() = 0
-  def remainingGems() = 0
+  def getDeck() = ArrayBuffer(new CloseCombat("",0),new CloseCombat("",0))
+  def shuffleDeck(): Unit = {
+
+  }
+  def remainingGems() = -100
   def takeDamage() = {
 
   }
