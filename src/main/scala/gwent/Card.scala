@@ -31,7 +31,7 @@ abstract class Card(private val name:String) extends ICard {
 
 /** Represents a Unit Card.
  *
- * Extends Card, and adds a requirement for a number of Strength Points to identify a card.
+ * Extends Card, and adds a requirement for a number of Strength Points in order to identify a card.
  *
  * @param name The name of the card.
  * @param SP Number of Strength Points.
