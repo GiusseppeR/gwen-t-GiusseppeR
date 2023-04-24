@@ -115,23 +115,26 @@ class Player(private val name:String, private var deck:ArrayBuffer[Card]) extend
    * @param n Number of cards taken.
    */
   override def takeCard(n: Int): Unit = {
-    val handSize:Int = this.currentHand().length
-    val deckLast = this.getDeck().length-1
+    val handSize:Int = this.currentHand().length //number of cards in Hand
+    val deckLast = this.getDeck().length-1 //Index of the last element in deck
+    //slice: Array of cards to be taken (a sub-array of deck)
     var slice: ArrayBuffer[Card] = ArrayBuffer()
+    // k is an auxiliary variable, it (sort of) represents the amount of cards actually taken
     var k:Int = n
-    if( n > deckLast+1 ){
-      slice = this.getDeck()
-    }
+    //We impose tha Hand cannot have more than 10 cards
     if(k+handSize > 10){
-      k = 10-handSize
+      k = 10-handSize // k is adjusted accordingly
     }
-    if (deckLast == 0 && k !=0){
+    //If the amount of cards requested is bigger than the available, then slice = deck
+    if (k >= deckLast + 1) {
       slice = this.getDeck()
-    } else {
-      slice = this.getDeck().slice(deckLast - k, deckLast)
     }
-    this.currentHand() ++= slice
-    this.getDeck() --= slice
+    //otherwise, slice is created using the slice() method of ArrayBuffer
+    else {
+      slice = this.getDeck().slice(deckLast - k, deckLast) //the last k cards from deck
+    }
+    this.currentHand() ++= slice //slice is added to Hand
+    this.getDeck() --= slice  //slice is removed from deck
   }
 
   override def equals(obj: Any): Boolean = {
@@ -146,6 +149,8 @@ class Player(private val name:String, private var deck:ArrayBuffer[Card]) extend
   override def hashCode(): Int = {
     Objects.hash(classOf[Player])
   }
+
+  //Creation of the player hand
   this.shuffleDeck()
   this.takeCard(10)
 
