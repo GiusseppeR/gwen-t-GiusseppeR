@@ -1,6 +1,7 @@
 package cl.uchile.dcc
 package gwent
 
+import java.util.Objects
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
@@ -58,6 +59,18 @@ class Player(private val name:String, private var deck:ArrayBuffer[Card]) extend
     this.getDeck() --= slice
   }
 
+  override def equals(obj: Any): Boolean = {
+    if (obj.isInstanceOf[Player]) {
+      val other = obj.asInstanceOf[Player]
+      (this eq other)
+    } else {
+      false
+    }
+  }
+
+  override def hashCode(): Int = {
+    Objects.hash(classOf[Player])
+  }
   this.shuffleDeck()
   this.takeCard(10)
 
