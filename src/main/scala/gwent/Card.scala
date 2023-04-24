@@ -3,16 +3,54 @@ package gwent
 
 import java.util.Objects
 
+/** Defines a card.
+ *
+ * getName must be specified in class.
+ * Used by Card and its subclasses
+ */
 trait ICard{
   def getName():String
 }
 
+/** Represents a generic card.
+ *
+ * Each generic card is defined only by its name.
+ *
+ * @param name The name of the card.
+ *
+ * @constructor Creates a card with a name.
+ */
 abstract class Card(private val name:String) extends ICard {
+
+  /** Provides the name of the card.
+   *
+   * @return The name used in the constructor.
+   */
   override def getName(): String = name
 }
+
+/** Represents a Unit Card.
+ *
+ * Extends Card, and adds a requirement for a number of Strength Points to identify a card.
+ *
+ * @param name The name of the card.
+ * @param SP Number of Strength Points.
+ *
+ * @constructor Creates a card with a name and a number of Strength Points.
+ */
 abstract class UnitCard(name:String, private var SP:Int) extends Card(name){
+
+  /** Provides the number of Strength Points associated with a Unit Card.
+   *
+   * @return The SP variable used in the constructor.
+   */
   def getSP(): Int = SP
 }
+
+/** Represents a Close Combat Unit Card
+ *
+ * Extends UnitCard
+ */
 class CloseCombat(name:String,SP:Int) extends UnitCard(name,SP){
 
   override def equals(obj: Any): Boolean = {
@@ -30,6 +68,10 @@ class CloseCombat(name:String,SP:Int) extends UnitCard(name,SP){
     Objects.hash(classOf[UnitCard], name, SP)
   }
 }
+/** Represents a Siege Unit Card
+ *
+ * Extends UnitCard
+ */
 class Siege(name:String,SP:Int) extends UnitCard(name,SP){
 
   override def equals(obj: Any): Boolean = {
@@ -48,6 +90,11 @@ class Siege(name:String,SP:Int) extends UnitCard(name,SP){
   }
 
 }
+
+/** Represents a Range Unit Card
+ *
+ * Extends UnitCard
+ */
 class Range(name:String,SP:Int) extends UnitCard(name,SP) {
 
   override def equals(obj: Any): Boolean = {
@@ -66,6 +113,11 @@ class Range(name:String,SP:Int) extends UnitCard(name,SP) {
   }
 
 }
+
+/** Represents a Weather Card
+ *
+ * Extends Card
+ */
 class WeatherCard(name:String) extends Card(name){
 
   override def equals(obj: Any): Boolean = {
