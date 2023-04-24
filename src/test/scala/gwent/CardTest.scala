@@ -40,7 +40,7 @@ class SiegeTest extends FunSuite {
     assertEquals(Card2.getSP(), 5)
   }
   test("Two Siege cards are equivalent if they have the same name and number of strength points"){
-    val Tower_2:Siege = new Siege("The Tower",12)
+    val Tower_2:Siege = new Siege("The Tower",10)
 
     assertEquals(Card1, Tower_2)
     assert(!Card1.equals(Card2))
