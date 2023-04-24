@@ -21,7 +21,7 @@ class CloseCombatTest extends FunSuite {
     val Emperor_2: CloseCombat = new CloseCombat("The Emperor", 12)
 
     assertEquals(Card1, Emperor_2)
-    assertEquals(Card1, Card1)
+    assertEquals(Card1.hashCode(),Emperor_2.hashCode())
     assert(!Card1.equals(Card2))
     assert(!Card1.equals(new WeatherCard("test")))
   }
@@ -45,7 +45,7 @@ class SiegeTest extends FunSuite {
     val Tower_2:Siege = new Siege("The Tower",10)
 
     assertEquals(Card1, Tower_2)
-    assertEquals(Card1, Card1)
+    assertEquals(Card1.hashCode(),Tower_2.hashCode())
     assert(!Card1.equals(Card2))
     assert(!Card1.equals(new WeatherCard("test")))
   }
@@ -68,7 +68,7 @@ class RangeTest extends FunSuite {
     val Hierophant_2:Range = new Range("The Hierophant",6)
 
     assertEquals(Card1, Hierophant_2)
-    assertEquals(Card1, Card1)
+    assertEquals(Card1.hashCode(),Hierophant_2.hashCode())
     assert(!Card1.equals(Card2))
     assert(!Card1.equals(new WeatherCard("test")))
   }
@@ -89,7 +89,7 @@ class WeatherTest extends FunSuite {
     val Sun_2: WeatherCard = new WeatherCard("The Sun")
 
     assertEquals(Card1,Sun_2)
-    assertEquals(Card1,Card1)
+    assertEquals(Card1.hashCode(),Sun_2.hashCode())
     assert(!Card1.equals(Card2))
     assert(!Card1.equals(new CloseCombat("test", 0)))
   }

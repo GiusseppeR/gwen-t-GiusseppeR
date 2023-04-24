@@ -52,8 +52,10 @@ class PlayerTest extends FunSuite {
   }
   test("Players are only equal to themselves"){
     val fake_Player1: Player = new Player("Jotaro", Deck1)
+
     assert(!Player1.equals(Player2))
     assert(!Player1.equals(fake_Player1))
+    assert(!Player1.equals(new WeatherCard("test")))
     assertEquals(Player1, Player1)
   }
   test("The deck size of the players should decrease by 10 when the class is created"){
