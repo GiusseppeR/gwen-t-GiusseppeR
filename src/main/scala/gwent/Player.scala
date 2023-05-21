@@ -97,7 +97,7 @@ class Player(private val name:String, private var deck:ArrayBuffer[Card]) extend
 
   /** Represents the effect that playing a card has in Player.
    *
-   * The player will choose a card to play, and it will be removed of its hand.
+   * The player will choose a card to play, and it will be removed from its hand.
    *
    * @param C Card chosen by the player.
    */
