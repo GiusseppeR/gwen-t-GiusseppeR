@@ -54,13 +54,26 @@ class BoardTest extends FunSuite {
     assertEquals(side1,Player1.getBoardSide())
     assertEquals(side2,Player2.getBoardSide())
   }
-  test("When a weather card is played, it should be added to the 'Weather zone' and replace the current one"){
+
+  test("When a weather card is placed, it should be added to the 'Weather zone' and replace the current one"){
+    Board.placeCard(Card3)
+    assertEquals(Card3, Board.getCurrentWeatherCard())
+
+    Board.placeCard(Card8)
+    assertEquals(Card8, Board.getCurrentWeatherCard())
+  }
+  test("The Board can receive commands"){
+    Side.receiveCommand(new playCommand(Card3))
+    assertEquals(Card3, Board.getCurrentWeatherCard())
+  }
+  test("The players can send commands to the board"){
     Player1.playCard(Card3)
     assertEquals(Card3, Board.getCurrentWeatherCard())
 
     Player2.playCard(Card8)
     assertEquals(Card8, Board.getCurrentWeatherCard())
   }
+
   test("The board should be able to properly tell the winner of the round"){
     Player1.playCard(Card1)
     Player1.playCard(Card2)
