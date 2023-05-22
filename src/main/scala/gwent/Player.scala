@@ -12,12 +12,17 @@ import scala.util.Random
  */
 trait Iplayer {
   def getName(): String
-  def getDeck(): ArrayBuffer[Card]
+  def getDeck(): ArrayBuffer[ICard]
   def remainingGems(): Int
   def takeDamage():Unit
-  def currentHand(): ArrayBuffer[Card]
-  def playCard(C:Card): Unit
+  def currentHand(): ArrayBuffer[ICard]
+  def playCard(C:ICard): Unit
   def takeCard(n:Int):Unit
+
+  def setBoard(board:Board):Unit
+  def getBoard():Board
+  def setBoardSide(side: BoardSide):Unit
+  def getBoardSide():BoardSide
 }
 
 /** Represents a player.
@@ -40,7 +45,21 @@ trait Iplayer {
  * var Hand = Player1.currentHand() // ArrayBuffer(Card1,Card2,...Card10)
  * }}}
  */
-class Player(private val name:String, private var deck:ArrayBuffer[Card]) extends Iplayer {
+class Player(private val name:String, private var deck:ArrayBuffer[ICard]) extends Iplayer {
+  private var board:Option[Board] = None
+  private var boardSide:Option[BoardSide] = None
+
+  override def setBoard(board: Board): Unit = {
+
+  }
+
+  override def getBoard(): Board = new Board()
+  override def setBoardSide(side: BoardSide): Unit = {
+
+  }
+
+  override def getBoardSide(): BoardSide = new BoardSide(" ")
+
   /** Starting number of Gems.
    *  2 by default.
    */
@@ -50,7 +69,7 @@ class Player(private val name:String, private var deck:ArrayBuffer[Card]) extend
    * Group of cards currently available for use by the player.
    * Is limited to 10 cards.
    */
-  private var Hand: ArrayBuffer[Card] = ArrayBuffer()
+  private var Hand: ArrayBuffer[ICard] = ArrayBuffer()
 
   /** Provides the name of the player.
    *
@@ -65,7 +84,7 @@ class Player(private val name:String, private var deck:ArrayBuffer[Card]) extend
    *
    * @return The deck of the player, considering all changes made to it.
    */
-  override def getDeck(): ArrayBuffer[Card] = deck
+  override def getDeck(): ArrayBuffer[ICard] = deck
 
   /** Shuffles the deck.
    *
@@ -93,7 +112,7 @@ class Player(private val name:String, private var deck:ArrayBuffer[Card]) extend
    *
    * @return The Hand variable.
    */
-  override def currentHand(): ArrayBuffer[Card] = Hand
+  override def currentHand(): ArrayBuffer[ICard] = Hand
 
   /** Represents the effect that playing a card has in Player.
    *
@@ -101,7 +120,7 @@ class Player(private val name:String, private var deck:ArrayBuffer[Card]) extend
    *
    * @param C Card chosen by the player.
    */
-  override def playCard(C: Card): Unit = {
+  override def playCard(C: ICard): Unit = {
     this.currentHand() -= C
   }
 
@@ -118,7 +137,7 @@ class Player(private val name:String, private var deck:ArrayBuffer[Card]) extend
     val handSize:Int = this.currentHand().length //number of cards in Hand
     val deckLast = this.getDeck().length-1 //Index of the last element in deck
     //slice: Array of cards to be taken (a sub-array of deck)
-    var slice: ArrayBuffer[Card] = ArrayBuffer()
+    var slice: ArrayBuffer[ICard] = ArrayBuffer()
     // k is an auxiliary variable, it (sort of) represents the amount of cards actually taken
     var k:Int = n
     //We impose tha Hand cannot have more than 10 cards

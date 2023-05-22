@@ -6,24 +6,27 @@ import munit.FunSuite
 import scala.collection.mutable.ArrayBuffer
 
 class PlayerTest extends FunSuite {
-  var Card1: Card = _
-  var Card2: Card = _
-  var Card3: Card = _
-  var Card4: Card = _
-  var Card5: Card = _
-  var Card6: Card = _
-  var Card7: Card = _
-  var Card8: Card = _
-  var Card9: Card = _
-  var Card10: Card = _
-  var Card11: Card = _
+  var Card1: ICard = _
+  var Card2: ICard = _
+  var Card3: ICard = _
+  var Card4: ICard = _
+  var Card5: ICard = _
+  var Card6: ICard = _
+  var Card7: ICard = _
+  var Card8: ICard = _
+  var Card9: ICard = _
+  var Card10: ICard = _
+  var Card11: ICard = _
 
-  var Deck1: ArrayBuffer[Card] =_
-  var Deck2: ArrayBuffer[Card] =_
+  var Deck1: ArrayBuffer[ICard] =_
+  var Deck2: ArrayBuffer[ICard] =_
 
   var Player1: Player =_
   var Player2: Player =_
 
+  var Board:Board =_
+
+  var Side:BoardSide =_
   override def beforeEach(context: BeforeEach): Unit = {
     Card1 = new WeatherCard("1")
     Card2 = new Siege("2",2)
@@ -42,6 +45,9 @@ class PlayerTest extends FunSuite {
 
     Player1 = new Player("Jotaro", Deck1)
     Player2 = new Player("D'Arby", Deck2)
+
+    Board = new Board()
+    Side = new BoardSide("East")
   }
   test("Players should have a name and a deck"){
     assertEquals(Player1.getName(), "Jotaro")
@@ -57,6 +63,13 @@ class PlayerTest extends FunSuite {
     assert(!Player1.equals(fake_Player1))
     assert(!Player1.equals(new WeatherCard("test")))
     assertEquals(Player1, Player1)
+  }
+  test("Players can be linked to a board and a board side"){
+    Player1.setBoard(Board)
+    Player1.setBoardSide(Side)
+
+    assertEquals(Board,Player1.getBoard())
+    assertEquals(Side,Player1.getBoardSide())
   }
   test("The deck size of the players should decrease by 10 when the class is created"){
     val expected = 1

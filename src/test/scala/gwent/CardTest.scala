@@ -3,12 +3,22 @@ package gwent
 
 import munit.FunSuite
 
+import scala.collection.mutable.ArrayBuffer
+
 class CloseCombatTest extends FunSuite {
   var Card1:CloseCombat = _
   var Card2:CloseCombat = _
+
+  var Board: Board =_
+  var Player:Player =_
   override def beforeEach(context:BeforeEach):Unit = {
     Card1 = new CloseCombat("The Emperor", 12)
     Card2 = new CloseCombat("The Chariot", 5)
+
+    Board = new Board()
+    Player = new Player("Polnareff", ArrayBuffer(Card1,Card2))
+
+    Board.addPlayer(Player,"North")
   }
   test("A CC card should have a name and a strength number associated"){
     assertEquals(Card1.getName(), "The Emperor")
@@ -25,14 +35,27 @@ class CloseCombatTest extends FunSuite {
     assert(!Card1.equals(Card2))
     assert(!Card1.equals(new WeatherCard("test")))
   }
+  test("Cards know their place in the board"){
+    val CCzone:ArrayBuffer[ICard] = ArrayBuffer(Card1)
+    Card1.goToZone(Player.getBoardSide())
+
+    assertEquals(CCzone, Player.getBoardSide().getCCzone())
+  }
 }
 
 class SiegeTest extends FunSuite {
   var Card1: Siege = _
   var Card2: Siege = _
+
+  var Board: Board = _
+  var Player: Player = _
   override def beforeEach(context:BeforeEach):Unit = {
     Card1 = new Siege("The Tower", 10)
     Card2 = new Siege("Wheel of Fortune", 5)
+    Board = new Board()
+    Player = new Player("Polnareff", ArrayBuffer(Card1, Card2))
+
+    Board.addPlayer(Player, "North")
   }
   test("A Siege card should have a name and a strength number associated"){
     assertEquals(Card1.getName(), "The Tower")
@@ -49,13 +72,27 @@ class SiegeTest extends FunSuite {
     assert(!Card1.equals(Card2))
     assert(!Card1.equals(new WeatherCard("test")))
   }
+  test("Cards know their place in the board") {
+    val SiegeZone:ArrayBuffer[ICard]= ArrayBuffer(Card1)
+    Card1.goToZone(Player.getBoardSide())
+
+    assertEquals(SiegeZone, Player.getBoardSide().getSiegeZone())
+  }
 }
 class RangeTest extends FunSuite {
   var Card1: Range = _
   var Card2: Range = _
+
+  var Board: Board = _
+  var Player: Player = _
   override def beforeEach(context:BeforeEach):Unit = {
     Card1 = new Range("The Hierophant", 6)
     Card2 = new Range("The High Priestess", 6)
+
+    Board = new Board()
+    Player = new Player("Polnareff", ArrayBuffer(Card1, Card2))
+
+    Board.addPlayer(Player, "North")
   }
   test("A Range card should have a name and a strength number associated"){
     assertEquals(Card1.getName(), "The Hierophant")
@@ -72,14 +109,28 @@ class RangeTest extends FunSuite {
     assert(!Card1.equals(Card2))
     assert(!Card1.equals(new WeatherCard("test")))
   }
+  test("Cards know their place in the board") {
+    val RangeZone:ArrayBuffer[ICard] = ArrayBuffer(Card1)
+    Card1.goToZone(Player.getBoardSide())
+
+    assertEquals(RangeZone, Player.getBoardSide().getRangeZone())
+  }
 }
 
 class WeatherTest extends FunSuite {
   var Card1: WeatherCard = _
   var Card2: WeatherCard = _
+
+  var Board: Board = _
+  var Player: Player = _
   override def beforeEach(context:BeforeEach):Unit = {
     Card1 = new WeatherCard("The Sun")
     Card2 = new WeatherCard("Judgement")
+
+    Board = new Board()
+    Player = new Player("Polnareff", ArrayBuffer(Card1, Card2))
+
+    Board.addPlayer(Player, "North")
   }
   test("A Weather card should have a name"){
     assertEquals(Card1.getName(), "The Sun")
@@ -92,6 +143,12 @@ class WeatherTest extends FunSuite {
     assertEquals(Card1.hashCode(),Sun_2.hashCode())
     assert(!Card1.equals(Card2))
     assert(!Card1.equals(new CloseCombat("test", 0)))
+  }
+  test("Cards know their place in the board") {
+    val WeatherZone = Card1
+    Card1.goToZone(Player.getBoard())
+
+    assertEquals(WeatherZone, Player.getBoard().getCurrentWeatherCard())
   }
 }
 

@@ -10,6 +10,7 @@ import java.util.Objects
  */
 trait ICard{
   def getName():String
+  def sendCommand(P:Player):Unit
 }
 
 /** Represents a generic card.
@@ -27,6 +28,9 @@ abstract class Card(private val name:String) extends ICard {
    * @return The name used in the constructor.
    */
   override def getName(): String = name
+
+  def sendCommand(P:Player): Unit
+
 }
 
 /** Represents a Unit Card.
@@ -45,6 +49,11 @@ abstract class UnitCard(name:String, private var SP:Int) extends Card(name){
    * @return The SP variable used in the constructor.
    */
   def getSP(): Int = SP
+
+  override def sendCommand(P:Player): Unit = {
+
+  }
+
 }
 
 /** Represents a Close Combat Unit Card
@@ -52,6 +61,10 @@ abstract class UnitCard(name:String, private var SP:Int) extends Card(name){
  * Extends UnitCard
  */
 class CloseCombat(name:String,SP:Int) extends UnitCard(name,SP){
+
+  def goToZone(B: BoardSide): Unit = {
+
+  }
 
   override def equals(obj: Any): Boolean = {
     if (obj.isInstanceOf[CloseCombat]) {
@@ -73,6 +86,9 @@ class CloseCombat(name:String,SP:Int) extends UnitCard(name,SP){
  * Extends UnitCard
  */
 class Siege(name:String,SP:Int) extends UnitCard(name,SP){
+  def goToZone(B: BoardSide): Unit = {
+
+  }
 
   override def equals(obj: Any): Boolean = {
     if (obj.isInstanceOf[Siege]) {
@@ -97,6 +113,10 @@ class Siege(name:String,SP:Int) extends UnitCard(name,SP){
  */
 class Range(name:String,SP:Int) extends UnitCard(name,SP) {
 
+  def goToZone(B: BoardSide): Unit = {
+
+  }
+
   override def equals(obj: Any): Boolean = {
     if (obj.isInstanceOf[Range]) {
       val other = obj.asInstanceOf[Range]
@@ -119,8 +139,16 @@ class Range(name:String,SP:Int) extends UnitCard(name,SP) {
  * Extends Card
  */
 class WeatherCard(name:String) extends Card(name){
+  override def sendCommand(P: Player): Unit = {
+
+  }
+
+  def goToZone(B: Board): Unit = {
+
+  }
 
   override def equals(obj: Any): Boolean = {
+
     if (obj.isInstanceOf[WeatherCard]) {
       val other = obj.asInstanceOf[WeatherCard]
       (this eq other) ||

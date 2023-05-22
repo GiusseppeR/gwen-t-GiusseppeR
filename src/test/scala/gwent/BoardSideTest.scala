@@ -15,6 +15,10 @@ class BoardSideTest extends FunSuite{
   var Card6: ICard = _
 
   var Side: BoardSide = _
+
+  var Deck:ArrayBuffer[ICard] = _
+
+  var Player1:Player = _
   override def beforeEach(context: BeforeEach): Unit = {
     Card1 = new CloseCombat("Star Platinum", 15)
     Card2 = new Range("Hierophant Green", 10)
@@ -23,6 +27,14 @@ class BoardSideTest extends FunSuite{
     Card4 = new CloseCombat("The World", 14)
     Card5 = new Range("Emperor", 10)
     Card6 = new Siege("Death Thirteen", 5)
+
+    Deck = ArrayBuffer(Card1,Card2,Card3)
+
+    Player1 = new Player("Jotaro",Deck)
+
+    Side = new BoardSide("South")
+
+    Player1.setBoardSide(Side)
   }
 
   test("A side must have a name"){
@@ -42,17 +54,17 @@ class BoardSideTest extends FunSuite{
     Side.placeCard(Card2)
     Side.placeCard(Card3)
 
-    assertEquals(CCzone,Side.getCCzone())
-    assertEquals(Rzone,Side.getRangeZone())
-    asssertEquals(Szone,Side.getSiegeZone())
+    assertEquals(Side.getCCzone(), CCzone)
+    assertEquals(Side.getRangeZone(), Rzone)
+    assertEquals(Side.getSiegeZone(), Szone)
 
     Side.placeCard(Card4)
     Side.placeCard(Card5)
     Side.placeCard(Card6)
 
-    assertNotEquals(CCzone, Side.getCCzone())
-    assertNotEquals(Rzone, Side.getRangeZone())
-    asssertNotEquals(Szone, Side.getSiegeZone())
+    assertEquals(Side.getCCzone(), CCzone)
+    assertEquals(Side.getRangeZone(), Rzone)
+    assertEquals(Side.getSiegeZone(), Szone)
   }
   test("A board side should be able to properly count its total score"){
     var score:Int = 0
@@ -69,27 +81,32 @@ class BoardSideTest extends FunSuite{
 
     assertEquals(score, Side.getPoints())
   }
-  test("A board side can receive commands"){
-    val CCzone = ArrayBuffer(Card1)
-
-    Side.receiveCommand(new playCommand(Card1))
-    assertEquals(CCzone, Side.getCCzone())
-  }
-  test("A player can send commands to the board side"){
-    var Deck = ArrayBuffer(Card1,Card2,Card3)
-    var Player = new Player("Jotaro",Deck)
-    Player.setBoardSide() = Side
-
+  test("A board side can receive commands from unit cards"){
     val CCzone = ArrayBuffer(Card1)
     val Rzone = ArrayBuffer(Card2)
     val Szone = ArrayBuffer(Card3)
 
-    Player.playCard(Card1)
-    Player.playCard(Card2)
-    Playe.playCard(Card3)
+    Card1.sendCommand(Player1)
+    Card2.sendCommand(Player1)
+    Card3.sendCommand(Player1)
 
-    assertEquals(CCzone, Side.getCCzone())
-    assertEquals(Rzone, Side.getRangeZone())
-    asssertEquals(Szone, Side.getSiegeZone())
+    assertEquals(Side.getCCzone(),CCzone)
+    assertEquals(Side.getRangeZone(), Rzone)
+    assertEquals(Side.getSiegeZone(), Szone)
   }
+  test("A player can send commands to its board side") {
+    val CCzone = ArrayBuffer(Card1)
+    val Rzone = ArrayBuffer(Card2)
+    val Szone = ArrayBuffer(Card3)
+
+    Player1.playCard(Card1)
+    Player1.playCard(Card2)
+    Player1.playCard(Card3)
+
+    assertEquals(Side.getCCzone(),CCzone)
+    assertEquals(Side.getRangeZone(),Rzone)
+    assertEquals(Side.getSiegeZone(),Szone)
+  }
+
+
 }
