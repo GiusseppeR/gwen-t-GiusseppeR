@@ -36,7 +36,7 @@ class CloseCombatTest extends FunSuite {
     assert(!Card1.equals(new WeatherCard("test")))
   }
   test("Cards know their place in the board"){
-    val CCzone:ArrayBuffer[ICard] = ArrayBuffer(Card1)
+    val CCzone = ArrayBuffer(Card1)
     Card1.goToZone(Player.getBoardSide())
 
     assertEquals(CCzone, Player.getBoardSide().getCCzone())
@@ -73,7 +73,7 @@ class SiegeTest extends FunSuite {
     assert(!Card1.equals(new WeatherCard("test")))
   }
   test("Cards know their place in the board") {
-    val SiegeZone:ArrayBuffer[ICard]= ArrayBuffer(Card1)
+    val SiegeZone= ArrayBuffer(Card1)
     Card1.goToZone(Player.getBoardSide())
 
     assertEquals(SiegeZone, Player.getBoardSide().getSiegeZone())
@@ -110,7 +110,7 @@ class RangeTest extends FunSuite {
     assert(!Card1.equals(new WeatherCard("test")))
   }
   test("Cards know their place in the board") {
-    val RangeZone:ArrayBuffer[ICard] = ArrayBuffer(Card1)
+    val RangeZone = ArrayBuffer(Card1)
     Card1.goToZone(Player.getBoardSide())
 
     assertEquals(RangeZone, Player.getBoardSide().getRangeZone())
@@ -145,7 +145,7 @@ class WeatherTest extends FunSuite {
     assert(!Card1.equals(new CloseCombat("test", 0)))
   }
   test("Cards know their place in the board") {
-    val WeatherZone = Card1
+    val WeatherZone: WeatherCard = Card1
     Card1.goToZone(Player.getBoard())
 
     assertEquals(WeatherZone, Player.getBoard().getCurrentWeatherCard())

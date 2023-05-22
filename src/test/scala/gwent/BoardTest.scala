@@ -7,15 +7,15 @@ import org.junit.internal.runners.statements.ExpectException
 import scala.collection.mutable.ArrayBuffer
 
 class BoardTest extends FunSuite {
-  var Card1: ICard = _
-  var Card2: ICard = _
-  var Card3: ICard = _
-  var Card4: ICard = _
+  var Card1: CloseCombat = _
+  var Card2: Range = _
+  var Card3: Siege = _
+  var Card4: WeatherCard = _
 
-  var Card5: ICard = _
-  var Card6: ICard = _
-  var Card7: ICard = _
-  var Card8: ICard = _
+  var Card5: CloseCombat = _
+  var Card6: Range = _
+  var Card7: Siege = _
+  var Card8: WeatherCard = _
 
   var Deck1:ArrayBuffer[ICard] = _
   var Deck2:ArrayBuffer[ICard] = _
@@ -78,22 +78,22 @@ class BoardTest extends FunSuite {
   }
 
   test("When a weather card is placed, it should be added to the 'Weather zone' and replace the current one"){
-    Board.placeCard(Card3)
-    assertEquals(Card3, Board.getCurrentWeatherCard())
+    Board.placeCard(Card4)
+    assertEquals(Card4, Board.getCurrentWeatherCard())
 
     Board.setWeatherCard(Card8)
     assertEquals(Card8, Board.getCurrentWeatherCard())
   }
   test("The Board can receive commands from weather cards"){
     Card4.sendCommand(Player1) //Player 1 orders that Card4 goes to its zone
-    assertEquals(Card3, Board.getCurrentWeatherCard())
+    assertEquals(Card4, Board.getCurrentWeatherCard())
   }
   test("The players can send commands to the board"){
     Board.addPlayer(Player1, "South")
     Board.addPlayer(Player2, "North")
 
     Player1.playCard(Card3)
-    assertEquals(Card3, Board.getCurrentWeatherCard())
+    assertEquals(Card4, Board.getCurrentWeatherCard())
 
     Player2.playCard(Card8)
     assertEquals(Card8, Board.getCurrentWeatherCard())
@@ -111,7 +111,7 @@ class BoardTest extends FunSuite {
     Player2.playCard(Card6)
     Player2.playCard(Card7)
 
-    assertEquals(Player1,Board.getWinner())
+    assertEquals(Player1,Board.getWinner().get)
   }
   test("Boards are unique"){
     Board.addPlayer(Player1,"North")

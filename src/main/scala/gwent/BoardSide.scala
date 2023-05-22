@@ -4,18 +4,24 @@ package gwent
 import scala.collection.mutable.ArrayBuffer
 
 class BoardSide(name: String) extends AbstractBoard{
-  private var CCzone:ArrayBuffer[CloseCombat] = _
-  private var RangeZone:ArrayBuffer[Range] = _
-  private var SiegeZone:ArrayBuffer[Siege] = _
-  private var CardsOnBoard:ArrayBuffer[ICard] = _
+  private var CCzone:ArrayBuffer[CloseCombat] = ArrayBuffer()
+  private var RangeZone:ArrayBuffer[Range] = ArrayBuffer()
+  private var SiegeZone:ArrayBuffer[Siege] = ArrayBuffer()
+  private var CardsOnBoard:ArrayBuffer[UnitCard] = ArrayBuffer()
 
-  def getPoints():Int = -1
-  def getName():String = " "
+  def getPoints():Int = {
+    var suma: Int = 0
+    for(card <- CardsOnBoard){
+      suma += card.getSP()
+    }
+    suma
+  }
+  def getName():String = name
 
-  def getCCzone():ArrayBuffer[ICard] = ArrayBuffer(new CloseCombat("",0))
-  def getRangeZone():ArrayBuffer[ICard] = ArrayBuffer(new Range("",0))
+  def getCCzone():ArrayBuffer[CloseCombat] = CCzone
+  def getRangeZone():ArrayBuffer[Range] = RangeZone
 
-  def getSiegeZone():ArrayBuffer[ICard] = ArrayBuffer(new Siege("",0))
+  def getSiegeZone():ArrayBuffer[Siege] = SiegeZone
 
 
 }

@@ -6,13 +6,13 @@ import munit.FunSuite
 import scala.collection.mutable.ArrayBuffer
 
 class BoardSideTest extends FunSuite{
-  var Card1: ICard = _
-  var Card2: ICard = _
-  var Card3: ICard = _
+  var Card1: CloseCombat = _
+  var Card2: Range = _
+  var Card3: Siege = _
 
-  var Card4: ICard = _
-  var Card5: ICard = _
-  var Card6: ICard = _
+  var Card4: CloseCombat = _
+  var Card5: Range = _
+  var Card6: Siege = _
 
   var Side: BoardSide = _
 

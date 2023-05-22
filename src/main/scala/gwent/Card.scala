@@ -11,6 +11,7 @@ import java.util.Objects
 trait ICard{
   def getName():String
   def sendCommand(P:Player):Unit
+  def goToZone(B: IBoard):Unit
 }
 
 /** Represents a generic card.
@@ -30,6 +31,8 @@ abstract class Card(private val name:String) extends ICard {
   override def getName(): String = name
 
   def sendCommand(P:Player): Unit
+
+  override def goToZone(B: IBoard): Unit = ???
 
 }
 
@@ -51,8 +54,9 @@ abstract class UnitCard(name:String, private var SP:Int) extends Card(name){
   def getSP(): Int = SP
 
   override def sendCommand(P:Player): Unit = {
-
+    P.getBoardSide().placeCard(this)
   }
+
 
 }
 
@@ -63,7 +67,7 @@ abstract class UnitCard(name:String, private var SP:Int) extends Card(name){
 class CloseCombat(name:String,SP:Int) extends UnitCard(name,SP){
 
   def goToZone(B: BoardSide): Unit = {
-
+    B.getCCzone() += this
   }
 
   override def equals(obj: Any): Boolean = {
@@ -87,7 +91,7 @@ class CloseCombat(name:String,SP:Int) extends UnitCard(name,SP){
  */
 class Siege(name:String,SP:Int) extends UnitCard(name,SP){
   def goToZone(B: BoardSide): Unit = {
-
+    B.getSiegeZone() += this
   }
 
   override def equals(obj: Any): Boolean = {
@@ -114,7 +118,7 @@ class Siege(name:String,SP:Int) extends UnitCard(name,SP){
 class Range(name:String,SP:Int) extends UnitCard(name,SP) {
 
   def goToZone(B: BoardSide): Unit = {
-
+    B.getRangeZone() += this
   }
 
   override def equals(obj: Any): Boolean = {
@@ -140,11 +144,11 @@ class Range(name:String,SP:Int) extends UnitCard(name,SP) {
  */
 class WeatherCard(name:String) extends Card(name){
   override def sendCommand(P: Player): Unit = {
-
+    P.getBoard().placeCard(this)
   }
 
   def goToZone(B: Board): Unit = {
-
+    B.setWeatherCard(this)
   }
 
   override def equals(obj: Any): Boolean = {

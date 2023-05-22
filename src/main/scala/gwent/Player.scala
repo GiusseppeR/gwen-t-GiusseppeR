@@ -49,16 +49,20 @@ class Player(private val name:String, private var deck:ArrayBuffer[ICard]) exten
   private var board:Option[Board] = None
   private var boardSide:Option[BoardSide] = None
 
-  override def setBoard(board: Board): Unit = {
-
+  override def setBoard(b: Board): Unit = {
+    board = Some(b)
   }
 
-  override def getBoard(): Board = new Board()
+  override def getBoard(): Board = {
+      board.get
+  }
   override def setBoardSide(side: BoardSide): Unit = {
-
+    boardSide = Some(side)
   }
 
-  override def getBoardSide(): BoardSide = new BoardSide(" ")
+  override def getBoardSide(): BoardSide = {
+      boardSide.get
+  }
 
   /** Starting number of Gems.
    *  2 by default.
