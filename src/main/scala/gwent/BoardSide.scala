@@ -40,5 +40,14 @@ class BoardSide(name: String) extends IBoardSide {
     CardsOnBoard.append(C)
   }
 
+  override def equals(obj: Any): Boolean = {
+    if (obj.isInstanceOf[BoardSide]) {
+      val other = obj.asInstanceOf[BoardSide]
+      (this eq other) ||
+        other.getName() == name
+    } else {
+      false
+    }
+  }
 
 }

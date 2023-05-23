@@ -5,26 +5,6 @@ import java.util.Objects
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
-/** Defines a Player.
- *
- * Each method must be defined in class.
- * Used by Player.
- */
-trait Iplayer {
-  def getName(): String
-  def getDeck(): ArrayBuffer[ICard]
-  def remainingGems(): Int
-  def takeDamage():Unit
-  def currentHand(): ArrayBuffer[ICard]
-  def playCard(C:ICard): Unit
-  def takeCard(n:Int):Unit
-
-  def setBoard(board:Board):Unit
-  def getBoard():Board
-  def setBoardSide(side: BoardSide):Unit
-  def getBoardSide():BoardSide
-}
-
 /** Represents a player.
  *
  * Each player is unique, and must have a name and a deck of cards.

@@ -65,7 +65,7 @@ class BoardTest extends FunSuite {
   test("Players can't be in the same board side"){
     val Player3: Player = new Player("Joseph", Deck1)
 
-    val playerList:ArrayBuffer[Player] = ArrayBuffer(Player1)
+    val playerList:ArrayBuffer[Player] = ArrayBuffer(Player1,Player2)
 
     Board.addPlayer(Player3, "South")
 

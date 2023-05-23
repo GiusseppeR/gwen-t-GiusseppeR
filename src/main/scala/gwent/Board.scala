@@ -7,9 +7,20 @@ class Board extends IBoard {
   private var playerList: ArrayBuffer[Player] = ArrayBuffer()
 
   override def addPlayer(P:Player, sideName: String): Unit = {
-    P.setBoard(this)
-    P.setBoardSide(new BoardSide(sideName))
-    playerList += P
+    try{
+      for (player <- playerList) {
+        if (P.equals(player) || sideName == player.getBoardSide().getName()) throw
+          new InvalidBoardPlacementException()
+      }
+
+      P.setBoard(this)
+      P.setBoardSide(new BoardSide(sideName))
+      playerList += P
+    }catch{
+      case a:InvalidBoardPlacementException => print("Invalid placement. Board side taken or player already in board")
+    }
+
+
   }
 
   override def getPlayerList():ArrayBuffer[Player] = playerList
@@ -33,5 +44,14 @@ class Board extends IBoard {
 
   override def setWeatherCard(C:WeatherCard):Unit = {
     weatherZone.prepend(C)
+  }
+
+  override def equals(obj: Any): Boolean = {
+    if (obj.isInstanceOf[Board]) {
+      val other = obj.asInstanceOf[Board]
+      (this eq other)
+    } else {
+      false
+    }
   }
 }
