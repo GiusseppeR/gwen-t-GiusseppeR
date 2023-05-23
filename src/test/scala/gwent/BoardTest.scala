@@ -44,20 +44,17 @@ class BoardTest extends FunSuite {
 
     Board = new Board()
 
-  }
-  test("New players can be added to a board"){
     Board.addPlayer(Player1, "South")
     Board.addPlayer(Player2, "North")
 
+  }
+  test("New players can be added to a board"){
     val PlayerList:ArrayBuffer[Player] = Board.getPlayerList()
 
     assertEquals(Player1,PlayerList(0))
     assertEquals(Player2, PlayerList(1))
   }
   test("The board should assign a side to each player"){
-    Board.addPlayer(Player1, "South")
-    Board.addPlayer(Player2, "North")
-
     val side1 = BoardSide("South")
     val side2 = BoardSide("North")
 
@@ -68,17 +65,15 @@ class BoardTest extends FunSuite {
   test("Players can't be in the same board side"){
     val Player3: Player = new Player("Joseph", Deck1)
 
-    Board.addPlayer(Player1, "South")
     val playerList:ArrayBuffer[Player] = ArrayBuffer(Player1)
 
-    Board.addPlayer(Player2, "South")
     Board.addPlayer(Player3, "South")
 
     assertEquals(Board.getPlayerList(),playerList)
   }
 
   test("When a weather card is placed, it should be added to the 'Weather zone' and replace the current one"){
-    Board.placeCard(Card4)
+    Board.setWeatherCard(Card4)
     assertEquals(Card4, Board.getCurrentWeatherCard())
 
     Board.setWeatherCard(Card8)
@@ -89,10 +84,7 @@ class BoardTest extends FunSuite {
     assertEquals(Card4, Board.getCurrentWeatherCard())
   }
   test("The players can send commands to the board"){
-    Board.addPlayer(Player1, "South")
-    Board.addPlayer(Player2, "North")
-
-    Player1.playCard(Card3)
+    Player1.playCard(Card4)
     assertEquals(Card4, Board.getCurrentWeatherCard())
 
     Player2.playCard(Card8)
@@ -100,8 +92,6 @@ class BoardTest extends FunSuite {
   }
 
   test("The board should be able to properly tell the winner of the round"){
-    Board.addPlayer(Player1, "South")
-    Board.addPlayer(Player2, "North")
 
     Player1.playCard(Card1)
     Player1.playCard(Card2)
@@ -114,9 +104,6 @@ class BoardTest extends FunSuite {
     assertEquals(Player1,Board.getWinner().get)
   }
   test("Boards are unique"){
-    Board.addPlayer(Player1,"North")
-    Board.addPlayer(Player2,"South")
-
     val HearthstoneBoard = new Board()
     HearthstoneBoard.addPlayer(Player1, "North")
     HearthstoneBoard.addPlayer(Player2, "South")

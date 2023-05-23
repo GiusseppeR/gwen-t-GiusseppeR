@@ -46,7 +46,7 @@ trait Iplayer {
  * }}}
  */
 class Player(private val name:String, private var deck:ArrayBuffer[ICard]) extends Iplayer {
-  private var board:Option[Board] = None
+  private var board: Option[Board] = None
   private var boardSide:Option[BoardSide] = None
 
   override def setBoard(b: Board): Unit = {
@@ -126,6 +126,9 @@ class Player(private val name:String, private var deck:ArrayBuffer[ICard]) exten
    */
   override def playCard(C: ICard): Unit = {
     this.currentHand() -= C
+    if (board.isDefined && boardSide.isDefined){
+      C.sendCommand(this)
+    }
   }
 
   /** Takes a number of cards from the deck and adds them to the player hand.

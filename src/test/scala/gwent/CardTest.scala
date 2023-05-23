@@ -146,7 +146,7 @@ class WeatherTest extends FunSuite {
   }
   test("Cards know their place in the board") {
     val WeatherZone: WeatherCard = Card1
-    Card1.goToZone(Player.getBoard())
+    Card1.sendCommand(Player)
 
     assertEquals(WeatherZone, Player.getBoard().getCurrentWeatherCard())
   }

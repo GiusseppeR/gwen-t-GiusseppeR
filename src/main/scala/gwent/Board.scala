@@ -3,7 +3,7 @@ package gwent
 
 import scala.collection.mutable.ArrayBuffer
 class Board extends IBoard {
-  private var weatherZone:Option[WeatherCard] = None
+  private var weatherZone:ArrayBuffer[WeatherCard] = ArrayBuffer()
   private var playerList: ArrayBuffer[Player] = ArrayBuffer()
 
   override def addPlayer(P:Player, sideName: String): Unit = {
@@ -23,7 +23,7 @@ class Board extends IBoard {
         max = playerPoints
         winner = Some(player)
         tie = false
-      } else if (max == playerPoints){
+      } else if (!player.equals(playerList(0)) && max == playerPoints){
         tie = true
       }
     }
@@ -33,9 +33,9 @@ class Board extends IBoard {
     winner
   }
 
-  override def getCurrentWeatherCard(): WeatherCard = weatherZone.get
+  override def getCurrentWeatherCard(): WeatherCard = weatherZone(0)
 
   override def setWeatherCard(C:WeatherCard):Unit = {
-    weatherZone = Some(C)
+    weatherZone.prepend(C)
   }
 }

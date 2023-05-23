@@ -7,7 +7,7 @@ class BoardSide(name: String) extends IBoardSide {
   private var CCzone:ArrayBuffer[CloseCombat] = ArrayBuffer()
   private var RangeZone:ArrayBuffer[Range] = ArrayBuffer()
   private var SiegeZone:ArrayBuffer[Siege] = ArrayBuffer()
-  private var CardsOnBoard:ArrayBuffer[UnitCard] = ArrayBuffer()
+  private var CardsOnBoard:ArrayBuffer[IUnitCard] = ArrayBuffer()
 
   def getPoints():Int = {
     var suma: Int = 0
@@ -23,7 +23,7 @@ class BoardSide(name: String) extends IBoardSide {
 
   def getSiegeZone():ArrayBuffer[Siege] = SiegeZone
 
-  override def placeCard(C: UnitCard): Unit = {
+  override def placeCard(C: IUnitCard): Unit = {
     C.goToZone(this)
   }
 
