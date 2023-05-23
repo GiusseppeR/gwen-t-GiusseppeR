@@ -11,7 +11,6 @@ import java.util.Objects
 trait ICard{
   def getName():String
   def sendCommand(P:Player):Unit
-  def goToZone(B: IBoard):Unit
 }
 
 /** Represents a generic card.
@@ -31,8 +30,6 @@ abstract class Card(private val name:String) extends ICard {
   override def getName(): String = name
 
   def sendCommand(P:Player): Unit
-
-  override def goToZone(B: IBoard): Unit = ???
 
 }
 

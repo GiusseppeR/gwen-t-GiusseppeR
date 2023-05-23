@@ -3,7 +3,7 @@ package gwent
 
 import scala.collection.mutable.ArrayBuffer
 
-class BoardSide(name: String) extends AbstractBoard{
+class BoardSide(name: String) extends IBoardSide {
   private var CCzone:ArrayBuffer[CloseCombat] = ArrayBuffer()
   private var RangeZone:ArrayBuffer[Range] = ArrayBuffer()
   private var SiegeZone:ArrayBuffer[Siege] = ArrayBuffer()
@@ -22,6 +22,10 @@ class BoardSide(name: String) extends AbstractBoard{
   def getRangeZone():ArrayBuffer[Range] = RangeZone
 
   def getSiegeZone():ArrayBuffer[Siege] = SiegeZone
+
+  override def placeCard(C: UnitCard): Unit = {
+    C.goToZone(this)
+  }
 
 
 }
