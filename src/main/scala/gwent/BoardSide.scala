@@ -27,5 +27,18 @@ class BoardSide(name: String) extends IBoardSide {
     C.goToZone(this)
   }
 
+  def addToCCzone(C: CloseCombat):Unit = {
+    CCzone.append(C)
+    CardsOnBoard.append(C)
+  }
+  def addToRangeZone(C: Range):Unit = {
+    RangeZone.append(C)
+    CardsOnBoard.append(C)
+  }
+  def addToSiegeZone(C: Siege):Unit = {
+    SiegeZone.append(C)
+    CardsOnBoard.append(C)
+  }
+
 
 }

@@ -10,7 +10,7 @@ import java.util.Objects
 class CloseCombat(name:String,SP:Int) extends AbstractUnitCard(name,SP){
 
   def goToZone(B: BoardSide): Unit = {
-    B.getCCzone() += this
+    B.addToCCzone(this)
   }
 
   override def equals(obj: Any): Boolean = {

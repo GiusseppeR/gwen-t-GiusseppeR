@@ -10,7 +10,7 @@ import java.util.Objects
 class Range(name:String,SP:Int) extends AbstractUnitCard(name,SP) {
 
   def goToZone(B: BoardSide): Unit = {
-    B.getRangeZone() += this
+    B.addToRangeZone(this)
   }
 
   override def equals(obj: Any): Boolean = {

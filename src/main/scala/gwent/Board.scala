@@ -14,21 +14,17 @@ class Board extends IBoard {
 
   override def getPlayerList():ArrayBuffer[Player] = playerList
   override def getWinner(): Option[Player] = {
-    var max:Int = playerList(0).getBoardSide().getPoints()
+    var max:Int = 0
     var winner: Option[Player] = None
-    var tie:Boolean = false
+    var playerPoints:Int = 0
     for(player <- playerList){
-      var playerPoints:Int = player.getBoardSide().getPoints()
+      playerPoints = player.getBoardSide().getPoints()
       if (playerPoints > max){
         max = playerPoints
         winner = Some(player)
-        tie = false
-      } else if (!player.equals(playerList(0)) && max == playerPoints){
-        tie = true
+      } else if (max > 0 && max == playerPoints){
+        winner = None
       }
-    }
-    if (max == playerList(0).getBoardSide().getPoints() && !tie){
-      winner = Some(playerList(0))
     }
     winner
   }

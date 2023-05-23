@@ -10,7 +10,7 @@ import java.util.Objects
 class Siege(name:String,SP:Int) extends AbstractUnitCard(name,SP){
 
   def goToZone(B: BoardSide): Unit = {
-    B.getSiegeZone() += this
+    B.addToSiegeZone(this)
   }
 
   override def equals(obj: Any): Boolean = {

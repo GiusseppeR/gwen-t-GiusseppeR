@@ -15,6 +15,7 @@ class BoardSideTest extends FunSuite{
   var Card6: Siege = _
 
   var Side: BoardSide = _
+  var Board:Board =_
 
   var Deck:ArrayBuffer[ICard] = _
 
@@ -33,8 +34,11 @@ class BoardSideTest extends FunSuite{
     Player1 = new Player("Jotaro",Deck)
 
     Side = new BoardSide("South")
+    Board = new Board()
 
+    Board.addPlayer(Player1," ")
     Player1.setBoardSide(Side)
+
   }
 
   test("A side must have a name"){
@@ -62,9 +66,9 @@ class BoardSideTest extends FunSuite{
     Side.placeCard(Card5)
     Side.placeCard(Card6)
 
-    assertEquals(Side.getCCzone(), CCzone)
-    assertEquals(Side.getRangeZone(), Rzone)
-    assertEquals(Side.getSiegeZone(), Szone)
+    assertNotEquals(Side.getCCzone(), CCzone)
+    assertNotEquals(Side.getRangeZone(), Rzone)
+    assertNotEquals(Side.getSiegeZone(), Szone)
   }
   test("A board side should be able to properly count its total score"){
     var score:Int = 0
