@@ -1,5 +1,9 @@
 package cl.uchile.dcc
-package gwent
+package gwent.cards
+
+import gwent.board.*
+import gwent.cards.*
+import gwent.player.*
 
 /** Represents a Unit Card.
  *
@@ -8,7 +12,6 @@ package gwent
  *
  * @param name The name of the card.
  * @param SP Number of Strength Points.
- *
  * @constructor Creates a card with a name and a number of Strength Points.
  */
 abstract class AbstractUnitCard(name:String, private var SP:Int) extends AbstractCard(name) with IUnitCard{

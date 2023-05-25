@@ -1,5 +1,9 @@
 package cl.uchile.dcc
-package gwent
+package gwent.cards
+
+import gwent.board.*
+import gwent.cards.*
+import gwent.player.*
 
 trait IUnitCard extends AbstractCard{
   def getSP():Int

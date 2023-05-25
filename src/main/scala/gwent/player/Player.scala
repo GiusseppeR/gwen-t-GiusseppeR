@@ -1,5 +1,8 @@
 package cl.uchile.dcc
-package gwent
+package gwent.player
+
+import gwent.board.*
+import gwent.cards.*
 
 import java.util.Objects
 import scala.collection.mutable.ArrayBuffer

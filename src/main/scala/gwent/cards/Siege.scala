@@ -1,25 +1,29 @@
 package cl.uchile.dcc
-package gwent
+package gwent.cards
+
+import gwent.board.*
+import gwent.cards.*
+import gwent.player.*
 
 import java.util.Objects
 
-/** Represents a Range Unit Card
+/** Represents a Siege Unit Card
  *
- * Extends UnitCard
+ * Extends AbstractUnitCard
  */
-class Range(name:String,SP:Int) extends AbstractUnitCard(name,SP) {
+class Siege(name:String,SP:Int) extends AbstractUnitCard(name,SP){
 
   def goToZone(B: BoardSide): Unit = {
-    B.addToRangeZone(this)
+    B.addToSiegeZone(this)
   }
 
   override def equals(obj: Any): Boolean = {
-    if (obj.isInstanceOf[Range]) {
-      val other = obj.asInstanceOf[Range]
+    if (obj.isInstanceOf[Siege]) {
+      val other = obj.asInstanceOf[Siege]
       (this eq other) ||
         other.getName() == name &&
           other.getSP() == SP
-    } else {
+    }else {
       false
     }
   }

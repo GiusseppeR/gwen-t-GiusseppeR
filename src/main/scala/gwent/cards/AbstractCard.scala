@@ -1,12 +1,14 @@
 package cl.uchile.dcc
-package gwent
+package gwent.cards
+
+import gwent.player.*
+import gwent.board.*
 
 /** Represents a generic card.
  *
  * Each generic card is defined only by its name.
  *
  * @param name The name of the card.
- *
  * @constructor Creates a card with a name.
  */
 abstract class AbstractCard(private val name:String) extends ICard {

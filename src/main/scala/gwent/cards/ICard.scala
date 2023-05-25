@@ -1,5 +1,7 @@
 package cl.uchile.dcc
-package gwent
+package gwent.cards
+
+import gwent.player.*
 
 /** Defines a card.
  *

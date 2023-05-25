@@ -1,6 +1,9 @@
 package cl.uchile.dcc
 package gwent
 
+import gwent.board.*
+import gwent.cards.*
+import gwent.player.*
 import munit.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
@@ -33,8 +36,8 @@ class PlayerTest extends FunSuite {
     Card3 = new Siege("3",3)
     Card4 = new CloseCombat("4",4)
     Card5 = new CloseCombat("5",5)
-    Card6 = new Range("6",6)
-    Card7 = new Range("7",7)
+    Card6 = new cards.Range("6",6)
+    Card7 = new cards.Range("7",7)
     Card8 = new WeatherCard("8")
     Card9 = new WeatherCard("9")
     Card10 = new WeatherCard("10")

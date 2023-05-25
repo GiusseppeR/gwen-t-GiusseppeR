@@ -1,6 +1,9 @@
 package cl.uchile.dcc
 package gwent
 
+import gwent.board.*
+import gwent.cards.*
+import gwent.player.*
 import munit.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
@@ -80,14 +83,14 @@ class SiegeTest extends FunSuite {
   }
 }
 class RangeTest extends FunSuite {
-  var Card1: Range = _
-  var Card2: Range = _
+  var Card1: cards.Range = _
+  var Card2: cards.Range = _
 
   var Board: Board = _
   var Player: Player = _
   override def beforeEach(context:BeforeEach):Unit = {
-    Card1 = new Range("The Hierophant", 6)
-    Card2 = new Range("The High Priestess", 6)
+    Card1 = new cards.Range("The Hierophant", 6)
+    Card2 = new cards.Range("The High Priestess", 6)
 
     Board = new Board()
     Player = new Player("Polnareff", ArrayBuffer(Card1, Card2))
@@ -102,7 +105,7 @@ class RangeTest extends FunSuite {
     assertEquals(Card2.getSP(), 6)
   }
   test("Two Range cards are equivalent if they have the same name and number of strength points"){
-    val Hierophant_2:Range = new Range("The Hierophant",6)
+    val Hierophant_2:cards.Range = new cards.Range("The Hierophant",6)
 
     assertEquals(Card1, Hierophant_2)
     assertEquals(Card1.hashCode(),Hierophant_2.hashCode())

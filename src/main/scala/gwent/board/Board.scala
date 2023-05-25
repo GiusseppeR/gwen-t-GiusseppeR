@@ -1,5 +1,8 @@
 package cl.uchile.dcc
-package gwent
+package gwent.board
+
+import gwent.cards.*
+import gwent.player.*
 
 import scala.collection.mutable.ArrayBuffer
 class Board extends IBoard {

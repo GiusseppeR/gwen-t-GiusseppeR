@@ -1,17 +1,21 @@
 package cl.uchile.dcc
 package gwent
 
+import gwent.board.*
+import gwent.cards.*
+import gwent.player.*
+
 import munit.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
 
 class BoardSideTest extends FunSuite{
   var Card1: CloseCombat = _
-  var Card2: Range = _
+  var Card2: cards.Range = _
   var Card3: Siege = _
 
   var Card4: CloseCombat = _
-  var Card5: Range = _
+  var Card5: cards.Range = _
   var Card6: Siege = _
 
   var Side: BoardSide = _
@@ -22,11 +26,11 @@ class BoardSideTest extends FunSuite{
   var Player1:Player = _
   override def beforeEach(context: BeforeEach): Unit = {
     Card1 = new CloseCombat("Star Platinum", 15)
-    Card2 = new Range("Hierophant Green", 10)
+    Card2 = new cards.Range("Hierophant Green", 10)
     Card3 = new Siege("Hermit Purple", 5)
 
     Card4 = new CloseCombat("The World", 14)
-    Card5 = new Range("Emperor", 10)
+    Card5 = new cards.Range("Emperor", 10)
     Card6 = new Siege("Death Thirteen", 5)
 
     Deck = ArrayBuffer(Card1,Card2,Card3)

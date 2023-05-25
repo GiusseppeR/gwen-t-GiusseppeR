@@ -1,25 +1,29 @@
 package cl.uchile.dcc
-package gwent
+package gwent.cards
+
+import gwent.board.*
+import gwent.cards.*
+import gwent.player.*
 
 import java.util.Objects
 
-/** Represents a Close Combat Unit Card
+/** Represents a Range Unit Card
  *
- * Extends AbstractUnitCard
+ * Extends UnitCard
  */
-class CloseCombat(name:String,SP:Int) extends AbstractUnitCard(name,SP){
+class Range(name:String,SP:Int) extends AbstractUnitCard(name,SP) {
 
   def goToZone(B: BoardSide): Unit = {
-    B.addToCCzone(this)
+    B.addToRangeZone(this)
   }
 
   override def equals(obj: Any): Boolean = {
-    if (obj.isInstanceOf[CloseCombat]) {
-      val other =obj.asInstanceOf[CloseCombat]
+    if (obj.isInstanceOf[Range]) {
+      val other = obj.asInstanceOf[Range]
       (this eq other) ||
         other.getName() == name &&
           other.getSP() == SP
-    }else{
+    } else {
       false
     }
   }
@@ -27,4 +31,5 @@ class CloseCombat(name:String,SP:Int) extends AbstractUnitCard(name,SP){
   override def hashCode(): Int = {
     Objects.hash(classOf[AbstractUnitCard], name, SP)
   }
+
 }

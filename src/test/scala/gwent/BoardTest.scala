@@ -1,6 +1,9 @@
 package cl.uchile.dcc
 package gwent
 
+import gwent.board.*
+import gwent.cards.*
+import gwent.player.*
 import munit.FunSuite
 import org.junit.internal.runners.statements.ExpectException
 
@@ -8,12 +11,12 @@ import scala.collection.mutable.ArrayBuffer
 
 class BoardTest extends FunSuite {
   var Card1: CloseCombat = _
-  var Card2: Range = _
+  var Card2: cards.Range = _
   var Card3: Siege = _
   var Card4: WeatherCard = _
 
   var Card5: CloseCombat = _
-  var Card6: Range = _
+  var Card6: cards.Range = _
   var Card7: Siege = _
   var Card8: WeatherCard = _
 
@@ -27,12 +30,12 @@ class BoardTest extends FunSuite {
 
   override def beforeEach(context:BeforeEach): Unit = {
     Card1 = new CloseCombat("Star Platinum", 15)
-    Card2 = new Range("Hierophant Green", 10)
+    Card2 = new cards.Range("Hierophant Green", 10)
     Card3 = new Siege("Hermit Purple", 5)
     Card4 = new WeatherCard("Magician Red")
 
     Card5 = new CloseCombat("The World",14)
-    Card6 = new Range("Emperor", 10)
+    Card6 = new cards.Range("Emperor", 10)
     Card7 = new Siege("Death Thirteen", 5)
     Card8 = new WeatherCard("Sun")
 
