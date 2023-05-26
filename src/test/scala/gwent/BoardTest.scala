@@ -6,7 +6,6 @@ import gwent.cards.*
 import gwent.player.*
 import munit.FunSuite
 import org.junit.internal.runners.statements.ExpectException
-
 import scala.collection.mutable.ArrayBuffer
 
 class BoardTest extends FunSuite {
@@ -76,6 +75,9 @@ class BoardTest extends FunSuite {
   }
 
   test("When a weather card is placed, it should be added to the 'Weather zone' and replace the current one"){
+    val default:WeatherCard = new WeatherCard("Clear Weather")
+    assertEquals(Board.getCurrentWeatherCard(),default)
+
     Board.setWeatherCard(Card4)
     assertEquals(Card4, Board.getCurrentWeatherCard())
 
@@ -104,7 +106,18 @@ class BoardTest extends FunSuite {
     Player2.playCard(Card6)
     Player2.playCard(Card7)
 
-    assertEquals(Player1,Board.getWinner().get)
+    assertEquals(Player1,Board.getWinner())
+  }
+  test("The board should be able to tell if the round ends in a tie"){
+
+    Player1.playCard(Card2)
+    Player1.playCard(Card3)
+
+    Player2.playCard(Card6)
+    Player2.playCard(Card7)
+
+    assertNotEquals(Player1,Board.getWinner())
+    assertNotEquals(Player2, Board.getWinner())
   }
   test("Boards are unique"){
     val HearthstoneBoard = new Board()
@@ -112,5 +125,10 @@ class BoardTest extends FunSuite {
     HearthstoneBoard.addPlayer(Player2, "South")
 
     assertNotEquals(HearthstoneBoard,Board)
+    assertNotEquals(HearthstoneBoard.hashCode(),Board.hashCode())
+    assert(!Board.equals(new BoardSide("test")))
+
+    assertEquals(Board,Board)
+    assertEquals(Board.hashCode(),Board.hashCode())
   }
 }

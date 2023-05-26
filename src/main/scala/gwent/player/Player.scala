@@ -156,7 +156,7 @@ class Player(private val name:String, private var deck:ArrayBuffer[ICard]) exten
   }
 
   override def hashCode(): Int = {
-    Objects.hash(classOf[Player])
+    System.identityHashCode(this)
   }
 
   //Creation of the player hand

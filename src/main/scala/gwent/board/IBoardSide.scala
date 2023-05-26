@@ -14,5 +14,8 @@ trait IBoardSide {
   def getRangeZone():ArrayBuffer[Range]
   def getSiegeZone():ArrayBuffer[Siege]
   def placeCard(C: IUnitCard):Unit
+  def addToCCzone(C: CloseCombat):Unit
+  def addToSiegeZone(C: Siege):Unit
+  def addToRangeZone(C:Range):Unit
 
 }

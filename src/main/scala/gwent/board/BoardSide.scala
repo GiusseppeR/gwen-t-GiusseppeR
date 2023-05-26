@@ -3,7 +3,9 @@ package gwent.board
 
 import gwent.cards.*
 import gwent.player.*
+import gwent.board.*
 
+import java.util.Objects
 import scala.collection.mutable.ArrayBuffer
 
 class BoardSide(name: String) extends IBoardSide {
@@ -30,15 +32,15 @@ class BoardSide(name: String) extends IBoardSide {
     C.goToZone(this)
   }
 
-  def addToCCzone(C: CloseCombat):Unit = {
+  override def addToCCzone(C: CloseCombat):Unit = {
     CCzone.append(C)
     CardsOnBoard.append(C)
   }
-  def addToRangeZone(C: Range):Unit = {
+  override def addToRangeZone(C: Range):Unit = {
     RangeZone.append(C)
     CardsOnBoard.append(C)
   }
-  def addToSiegeZone(C: Siege):Unit = {
+  override def addToSiegeZone(C: Siege):Unit = {
     SiegeZone.append(C)
     CardsOnBoard.append(C)
   }
@@ -53,4 +55,7 @@ class BoardSide(name: String) extends IBoardSide {
     }
   }
 
+  override def hashCode(): Int = {
+    Objects.hash(classOf[BoardSide],name)
+  }
 }

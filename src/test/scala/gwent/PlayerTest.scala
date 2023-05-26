@@ -60,12 +60,15 @@ class PlayerTest extends FunSuite {
     assertEquals(Player2.getDeck(),Deck2)
   }
   test("Players are only equal to themselves"){
-    val fake_Player1: Player = new Player("Jotaro", Deck1)
+    val fake_Player1: Player = new Player("Jotaro", Deck2)
 
     assert(!Player1.equals(Player2))
     assert(!Player1.equals(fake_Player1))
     assert(!Player1.equals(new WeatherCard("test")))
     assertEquals(Player1, Player1)
+
+    assertNotEquals(Player1.hashCode(),fake_Player1.hashCode())
+    assertEquals(Player1.hashCode(),Player1.hashCode())
   }
   test("Players can be linked to a board and a board side"){
     Player1.setBoard(Board)

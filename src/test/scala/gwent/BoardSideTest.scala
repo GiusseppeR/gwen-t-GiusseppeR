@@ -50,8 +50,14 @@ class BoardSideTest extends FunSuite{
   }
   test("Two sides are equal if they have the same name"){
     val Austral_side = new BoardSide("South")
+    val Northern_side = new BoardSide("North")
 
     assertEquals(Austral_side,Side)
+    assertEquals(Austral_side.hashCode(),Side.hashCode())
+
+    assertNotEquals(Northern_side,Side)
+
+    assert(!Side.equals(new Board()))
   }
   test("A side has a zone for each type of UnitCard, which update when the player plays a card"){
     val CCzone = ArrayBuffer(Card1)
