@@ -6,6 +6,11 @@ import gwent.player.*
 
 import scala.collection.mutable.ArrayBuffer
 
+/** Defines a Board.
+ *
+ * Methods must be specified in class.
+ * Used by Board class.
+ */
 trait IBoard {
   def addPlayer(P:Player, sideName: String): Unit
   def getPlayerList():ArrayBuffer[Player]

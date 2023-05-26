@@ -5,8 +5,8 @@ import gwent.player.*
 
 /** Defines a card.
  *
- * getName must be specified in class.
- * Used by Card and its subclasses
+ * Methods must be specified in class.
+ * Used by AbstractCard and its subclasses
  */
 trait ICard{
   def getName():String

@@ -22,8 +22,22 @@ abstract class AbstractUnitCard(name:String, private var SP:Int) extends Abstrac
    */
   override def getSP(): Int = SP
 
+  /** Tells the Board Object linked to player that a unit card was played.
+   *
+   * Method for double dispatch. Used when a player plays a card (see playCard method from Player class).
+   * If there is a board side assigned to the player, then further type verification is needed.
+   * Therefore, it continues the double dispatch process by calling the placeCard method from BoardSide class.
+   *
+   * If there is no board side, it does nothing.
+   *
+   * @param P Player that played the card.
+   */
   override def sendCommand(P:Player): Unit = {
-    P.getBoardSide().placeCard(this)
+    try{
+      P.getBoardSide().placeCard(this)
+    }catch{
+      case e:Exception => println("No board side")
+    }
   }
 
   override def goToZone(B: BoardSide): Unit

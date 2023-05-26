@@ -12,7 +12,13 @@ import java.util.Objects
  * Extends AbstractUnitCard
  */
 class Siege(name:String,SP:Int) extends AbstractUnitCard(name,SP){
-
+  /** Tells the BoardSide object that a Siege card was played.
+   *
+   * Finishes the double dispatch process initiated by the playCard method from Player class.
+   * Places the card in its proper zone by calling the addToSiegeZone method from BoardSide class.
+   *
+   * @param B Reference to the board side of a player.
+   */
   def goToZone(B: BoardSide): Unit = {
     B.addToSiegeZone(this)
   }

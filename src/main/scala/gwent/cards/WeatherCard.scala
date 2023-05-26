@@ -10,8 +10,21 @@ import java.util.Objects
  * Extends AbstractCard
  */
 class WeatherCard(name:String) extends AbstractCard(name){
+
+  /** Tells the Board Object linked to player that a weather card was played.
+   *
+   * Method for double dispatch. Used when a player plays a card (see playCard method from Player class).
+   * If there is a board, then it puts it in its place by calling the setWeatherCard method from Board class.
+   * If there is no board, it does nothing.
+   *
+   * @param P Player that played the card.
+   */
   override def sendCommand(P: Player): Unit = {
-    P.getBoard().setWeatherCard(this)
+    try{
+      P.getBoard().setWeatherCard(this)
+    } catch{
+      case e:Exception => println("No Board")
+    }
   }
 
   override def equals(obj: Any): Boolean = {

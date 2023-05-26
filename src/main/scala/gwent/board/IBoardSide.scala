@@ -6,6 +6,12 @@ import gwent.cards.*
 
 import scala.collection.mutable.ArrayBuffer
 
+/** Defines a board side.
+ *
+ * Methods must be specified in class.
+ * Used by BoardSide class.
+ */
+
 trait IBoardSide {
 
   def getPoints():Int

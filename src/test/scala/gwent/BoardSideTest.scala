@@ -59,7 +59,20 @@ class BoardSideTest extends FunSuite{
 
     assert(!Side.equals(new Board()))
   }
-  test("A side has a zone for each type of UnitCard, which update when the player plays a card"){
+  test("A side has a zone for each type of UnitCard, and they can be updated") {
+    val CCzone = ArrayBuffer(Card1)
+    val Rzone = ArrayBuffer(Card2)
+    val Szone = ArrayBuffer(Card3)
+
+    Side.addToCCzone(Card1)
+    Side.addToRangeZone(Card2)
+    Side.addToSiegeZone(Card3)
+
+    assertEquals(Side.getCCzone(), CCzone)
+    assertEquals(Side.getRangeZone(), Rzone)
+    assertEquals(Side.getSiegeZone(), Szone)
+  }
+  test("A side has a zone for each type of UnitCard, and they update when a card is placed"){
     val CCzone = ArrayBuffer(Card1)
     val Rzone = ArrayBuffer(Card2)
     val Szone = ArrayBuffer(Card3)

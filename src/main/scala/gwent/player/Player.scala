@@ -29,34 +29,69 @@ import scala.util.Random
  * }}}
  */
 class Player(private val name:String, private var deck:ArrayBuffer[ICard]) extends Iplayer {
+  /** Board in which the player is involved.
+   *
+   * None by default.
+   */
   private var board: Option[Board] = None
+
+  /** Board side of the player.
+   *
+   * None by default.
+   */
   private var boardSide:Option[BoardSide] = None
-
-  override def setBoard(b: Board): Unit = {
-    board = Some(b)
-  }
-
-  override def getBoard(): Board = {
-      board.get
-  }
-  override def setBoardSide(side: BoardSide): Unit = {
-    boardSide = Some(side)
-  }
-
-  override def getBoardSide(): BoardSide = {
-      boardSide.get
-  }
 
   /** Starting number of Gems.
    *  2 by default.
    */
   private var Gems: Int = 2
+
   /** Hand of the player.
    *
    * Group of cards currently available for use by the player.
    * Is limited to 10 cards.
    */
   private var Hand: ArrayBuffer[ICard] = ArrayBuffer()
+
+  /** Links the player to an existing board.
+   *
+   * @param b Board to be set.
+   */
+  override def setBoard(b: Board): Unit = {
+    board = Some(b)
+  }
+
+  /** Provides a reference to the board linked to player.
+   *
+   * This method is implemented for double dispatch purposes.
+   * Thus, it is used only when board is not None.
+   * For reference, please see the playCard method below.
+   *
+   * @return Board object currently linked to the player.
+   */
+  override def getBoard(): Board = {
+    board.get
+  }
+
+  /** Assigns a board side to the player.
+   *
+   * @param b BoardSide to be assigned.
+   */
+  override def setBoardSide(side: BoardSide): Unit = {
+    boardSide = Some(side)
+  }
+
+  /** Provides a reference to the board side assigned to player.
+   *
+   * Again, this method is implemented for double dispatch purposes.
+   * Not used when boardSide is None.
+   * For reference, please see the playCard method below.
+   *
+   * @return BoardSide object assigned to the player.
+   */
+  override def getBoardSide(): BoardSide = {
+    boardSide.get
+  }
 
   /** Provides the name of the player.
    *
@@ -101,17 +136,18 @@ class Player(private val name:String, private var deck:ArrayBuffer[ICard]) exten
    */
   override def currentHand(): ArrayBuffer[ICard] = Hand
 
-  /** Represents the effect that playing a card has in Player.
+  /** Represents the action of playing a card.
    *
-   * The player will choose a card to play, and it will be removed from its hand.
+   * The player can choose a card from its hand and play it.
+   * If the card has no place to go to, then it only removes the selected card from Hand (testing purposes).
+   * If the card has a place to go to, then it also starts a double dispatch process that ends up with the card in its place.
+   * Possible exceptions handled in sendCommand method.
    *
    * @param C Card chosen by the player.
    */
   override def playCard(C: ICard): Unit = {
     this.currentHand() -= C
-    if (board.isDefined && boardSide.isDefined){
-      C.sendCommand(this)
-    }
+    C.sendCommand(this)
   }
 
   /** Takes a number of cards from the deck and adds them to the player hand.
@@ -130,7 +166,7 @@ class Player(private val name:String, private var deck:ArrayBuffer[ICard]) exten
     var slice: ArrayBuffer[ICard] = ArrayBuffer()
     // k is an auxiliary variable, it (sort of) represents the amount of cards actually taken
     var k:Int = n
-    //We impose tha Hand cannot have more than 10 cards
+    //We impose that Hand cannot have more than 10 cards
     if(k+handSize > 10){
       k = 10-handSize // k is adjusted accordingly
     }
