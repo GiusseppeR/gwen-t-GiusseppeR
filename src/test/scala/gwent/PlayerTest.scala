@@ -52,12 +52,12 @@ class PlayerTest extends FunSuite {
     Board = new Board()
     Side = new BoardSide("East")
   }
-  test("Players should have a name and a deck"){
+  test("Players should have a name and a starting deck"){
     assertEquals(Player1.getName(), "Jotaro")
     assertEquals(Player2.getName(), "D'Arby")
 
-    assertEquals(Player1.getDeck(), Deck1)
-    assertEquals(Player2.getDeck(),Deck2)
+    assertEquals(Player1.getInitDeck(), Deck1)
+    assertEquals(Player2.getInitDeck(),Deck2)
   }
   test("Players are only equal to themselves"){
     val fake_Player1: Player = new Player("Jotaro", Deck2)
@@ -130,6 +130,22 @@ class PlayerTest extends FunSuite {
     Player2.takeDamage()
     assertEquals(Player1.remainingGems(), expected)
     assertEquals(Player2.remainingGems(), expected)
+  }
+  test("The deck of the players should be able to properly shuffle"){
+    /*disclaimer: the deck could, eventually, stay the same.
+    * However, with 15 different cards, the probability of it staying the same is about 0.00000000007%
+    * We can safely assume that it won't happen.*/
+
+    val Card12 = new WeatherCard("12")
+    val Card13 = new WeatherCard("13")
+    val Card14 = new WeatherCard("14")
+    val Card15 = new WeatherCard("15")
+    val Rdeck = ArrayBuffer(Card1,Card2,Card3,Card4,Card5,Card6,Card7,Card8,Card9,Card10,Card11,Card12,Card13,Card14,Card15)
+
+    val Player3 = new Player("test",Rdeck)
+    Player3.shuffleDeck()
+
+    assertNotEquals(Rdeck, Player3.getDeck() )
   }
 
 

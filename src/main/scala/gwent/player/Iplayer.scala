@@ -13,6 +13,7 @@ import scala.collection.mutable.ArrayBuffer
  */
 trait Iplayer {
   def getName(): String
+  def getInitDeck():ArrayBuffer[ICard]
   def getDeck(): ArrayBuffer[ICard]
   def remainingGems(): Int
   def takeDamage():Unit

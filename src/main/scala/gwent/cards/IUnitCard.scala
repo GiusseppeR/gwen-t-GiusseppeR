@@ -10,7 +10,7 @@ import gwent.player.*
  * Methods must be specified in class.
  * Used by AbstractUnitCard and its subclasses
  */
-trait IUnitCard extends AbstractCard{
+trait IUnitCard{
   def getSP():Int
   def goToZone(B: BoardSide):Unit
 }

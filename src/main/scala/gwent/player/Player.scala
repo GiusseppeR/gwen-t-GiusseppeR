@@ -28,7 +28,11 @@ import scala.util.Random
  * var Hand = Player1.currentHand() // ArrayBuffer(Card1,Card2,...Card10)
  * }}}
  */
-class Player(private val name:String, private var deck:ArrayBuffer[ICard]) extends Iplayer {
+class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) extends Iplayer {
+  /** Current state of the introduced deck.
+   * Equal to the initial deck by default.
+   */
+  private var deck:ArrayBuffer[ICard] = initDeck
   /** Board in which the player is involved.
    *
    * None by default.
@@ -99,6 +103,12 @@ class Player(private val name:String, private var deck:ArrayBuffer[ICard]) exten
    */
   override def getName(): String = name
 
+  /**Provides the deck introduced in the constructor.
+   *
+   * @return initial deck of cards.
+   */
+  override def getInitDeck(): ArrayBuffer[ICard] = initDeck
+
   /** Shows the deck of the player in its current state.
    *
    * ''deck'' is an mutable ArrayBuffer, which means that it can (and will)
@@ -112,8 +122,8 @@ class Player(private val name:String, private var deck:ArrayBuffer[ICard]) exten
    *
    * Applies a Random method that changes the order of the cards in the deck.
    */
-  private def shuffleDeck(): Unit = {
-    Random.shuffle(deck)
+  def shuffleDeck(): Unit = {
+    deck = Random.shuffle(deck)
   }
 
   /** Shows the amount of Gems left.
@@ -194,9 +204,8 @@ class Player(private val name:String, private var deck:ArrayBuffer[ICard]) exten
   override def hashCode(): Int = {
     System.identityHashCode(this)
   }
+  shuffleDeck()
+  takeCard(10)
 
-  //Creation of the player hand
-  this.shuffleDeck()
-  this.takeCard(10)
 
 }
