@@ -26,7 +26,7 @@ During the game, the players can strengthen their armies or modify the weather c
 [Work in progress]
 
 ## Modeling the different components of the game
-![UML](https://www.docdroid.net/oI2VY6g/uml-pdf)
+![UML](https://svgshare.com/i/tf6.svg)
 
 **Player**
 
