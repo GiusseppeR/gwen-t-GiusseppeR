@@ -122,7 +122,7 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
    *
    * Applies a Random method that changes the order of the cards in the deck.
    */
-  def shuffleDeck(): Unit = {
+  override def shuffleDeck(): Unit = {
     deck = Random.shuffle(deck)
   }
 

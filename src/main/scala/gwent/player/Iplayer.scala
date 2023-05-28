@@ -20,7 +20,7 @@ trait Iplayer {
   def currentHand(): ArrayBuffer[ICard]
   def playCard(C:ICard): Unit
   def takeCard(n:Int):Unit
-
+  def shuffleDeck():Unit
   def setBoard(board:Board):Unit
   def getBoard():Board
   def setBoardSide(side: BoardSide):Unit
