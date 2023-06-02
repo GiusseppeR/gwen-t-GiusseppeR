@@ -17,7 +17,7 @@ import scala.collection.mutable.ArrayBuffer
  *
  * @constructor Creates an empty board side with a name.
  */
-class BoardSide(name: String) extends IBoardSide {
+class BoardSide(private val name: String) extends IBoardSide {
   /** Zone of close combat cards.
    * Stores close combat cards played.
    */
@@ -47,19 +47,28 @@ class BoardSide(name: String) extends IBoardSide {
    *
    * @return Array of all close combat cards played.
    */
-  def getCCzone():ArrayBuffer[CloseCombat] = CCzone
+  def getCCzone():ArrayBuffer[CloseCombat] = {
+    val clone = CCzone
+    clone
+  }
 
   /** Gives access to the range zone.
    *
    * @return Array of all range cards played.
    */
-  def getRangeZone():ArrayBuffer[Range] = RangeZone
+  def getRangeZone():ArrayBuffer[Range] = {
+    val clone = RangeZone
+    clone
+  }
 
   /** Gives access to the siege zone.
    *
    * @return Array of all siege cards played.
    */
-  def getSiegeZone():ArrayBuffer[Siege] = SiegeZone
+  def getSiegeZone():ArrayBuffer[Siege] = {
+    val clone = SiegeZone
+    clone
+  }
 
   /** Gives the order to place a card in its relative zone.
    *

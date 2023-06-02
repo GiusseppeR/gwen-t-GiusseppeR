@@ -20,7 +20,10 @@ abstract class AbstractUnitCard(name:String, private var SP:Int) extends Abstrac
    *
    * @return The SP variable used in the constructor.
    */
-  override def getSP(): Int = SP
+  override def getSP(): Int = {
+    val clone = SP
+    SP
+  }
 
   /** Tells the Board Object linked to player that a unit card was played.
    *

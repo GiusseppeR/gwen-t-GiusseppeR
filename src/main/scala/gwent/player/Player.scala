@@ -107,8 +107,11 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
    *
    * @return initial deck of cards.
    */
-  override def getInitDeck(): ArrayBuffer[ICard] = initDeck
+  override def getInitDeck(): ArrayBuffer[ICard] = {
+    val clone = initDeck
 
+    clone
+  }
   /** Shows the deck of the player in its current state.
    *
    * ''deck'' is an mutable ArrayBuffer, which means that it can (and will)
@@ -116,7 +119,10 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
    *
    * @return The deck of the player, considering all changes made to it.
    */
-  override def getDeck(): ArrayBuffer[ICard] = deck
+  override def getDeck(): ArrayBuffer[ICard] = {
+    val clone = deck
+    clone
+  }
 
   /** Shuffles the deck.
    *
@@ -130,7 +136,11 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
    *
    * @return The Gems variable.
    */
-  override def remainingGems(): Int = Gems
+  override def remainingGems(): Int = {
+    val clone = Gems
+
+    clone
+  }
 
   /** Makes the player lose a Gem.
    *
@@ -144,7 +154,11 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
    *
    * @return The Hand variable.
    */
-  override def currentHand(): ArrayBuffer[ICard] = Hand
+  override def currentHand(): ArrayBuffer[ICard] = {
+    val clone = Hand
+
+    clone
+  }
 
   /** Represents the action of playing a card.
    *
@@ -170,8 +184,8 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
    * @param n Number of cards taken.
    */
   override def takeCard(n: Int): Unit = {
-    val handSize:Int = this.currentHand().length //number of cards in Hand
-    val deckLast = this.getDeck().length-1 //Index of the last element in deck
+    val handSize:Int = Hand.length //number of cards in Hand
+    val deckLast = deck.length-1 //Index of the last element in deck
     //slice: Array of cards to be taken (a sub-array of deck)
     var slice: ArrayBuffer[ICard] = ArrayBuffer()
     // k is an auxiliary variable, it (sort of) represents the amount of cards actually taken
@@ -182,14 +196,14 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
     }
     //If the amount of cards requested is bigger than the available, then slice = deck
     if (k >= deckLast + 1) {
-      slice = this.getDeck()
+      slice = deck
     }
     //otherwise, slice is created using the slice() method of ArrayBuffer
     else {
-      slice = this.getDeck().slice(deckLast - k, deckLast) //the last k cards from deck
+      slice = deck.slice(deckLast - k, deckLast) //the last k cards from deck
     }
-    this.currentHand() ++= slice //slice is added to Hand
-    this.getDeck() --= slice  //slice is removed from deck
+    Hand ++= slice //slice is added to Hand
+    deck --= slice  //slice is removed from deck
   }
 
   override def equals(obj: Any): Boolean = {

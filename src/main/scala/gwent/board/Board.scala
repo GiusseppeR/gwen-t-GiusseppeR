@@ -69,7 +69,11 @@ class Board extends IBoard {
    *
    * @return Array with references to the players in board.
    */
-  override def getPlayerList():ArrayBuffer[Player] = playerList
+  override def getPlayerList():ArrayBuffer[Player] = {
+    val clone = playerList
+
+    clone
+  }
 
   /** Determines the winner of the round.
    *
@@ -114,7 +118,11 @@ class Board extends IBoard {
    *
    * @return first element of weatherZone
    */
-  override def getCurrentWeatherCard(): WeatherCard = weatherZone(0)
+  override def getCurrentWeatherCard(): WeatherCard = {
+    val clone = weatherZone(0)
+
+    clone
+  }
 
   /** Sets a new weather card in effect.
    *
