@@ -22,7 +22,7 @@ abstract class AbstractUnitCard(name:String, private var SP:Int) extends Abstrac
    */
   override def getSP(): Int = {
     val clone = SP
-    SP
+    clone
   }
 
   /** Tells the Board Object linked to player that a unit card was played.
