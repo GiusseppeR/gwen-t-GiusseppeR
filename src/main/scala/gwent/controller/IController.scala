@@ -10,8 +10,9 @@ trait IController {
   def setName():Unit
   def startGame():Unit
   def startRound():Unit
-  def cardSelection():Unit
+  def playCard():Unit
   def Pass():Unit
   def nextRound():Unit
   def getState():State
+  def setState(C: State): Unit
 }

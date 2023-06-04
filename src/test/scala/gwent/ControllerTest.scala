@@ -5,6 +5,7 @@ import gwent.board.*
 import gwent.cards.*
 import gwent.player.*
 import gwent.controller.*
+import gwent.states.*
 
 import cl.uchile.dcc.gwent.states.{EndOfGame, EndOfRound, GameConfiguration, GameStart, MainMenu, Passed, RoundStart}
 import munit.FunSuite
@@ -46,13 +47,12 @@ class ControllerTest extends FunSuite {
     assert(Controller.getState().isInstanceOf[EndOfGame] ||
       Controller.getState().isInstanceOf[RoundStart] )
 
-    Controller.setState(new EndofGame)
+    Controller.setState(new EndOfGame(Controller))
     Controller.startRound()
     assert(Controller.getState().isInstanceOf[MainMenu])
 
-    Controller.setState(new RoundStart() )
+    Controller.setState(new RoundStart(Controller))
     Controller.startRound()
     assert(Controller.getState().isInstanceOf[First])
-
   }
 }
