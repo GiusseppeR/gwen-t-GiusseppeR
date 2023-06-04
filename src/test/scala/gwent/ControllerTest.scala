@@ -28,6 +28,9 @@ class ControllerTest extends FunSuite {
     Controller.startGame()
     assert(Controller.getState().isInstanceOf[GameStart])
 
+    Controller.prepareRound()
+    assert(Controller.getState().isInstanceOf[RoundStart])
+    
     Controller.startRound()
     assert(Controller.getState().isInstanceOf[First])
 

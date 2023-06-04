@@ -9,6 +9,7 @@ trait IController {
   def addCard():Unit
   def setName():Unit
   def startGame():Unit
+  def prepareRound():Unit
   def startRound():Unit
   def playCard():Unit
   def Pass():Unit

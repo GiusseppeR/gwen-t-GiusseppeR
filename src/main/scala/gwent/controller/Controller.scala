@@ -7,49 +7,56 @@ import gwent.player.*
 import gwent.states.*
 
 class Controller extends IController {
-  def newGame(): Unit = {
+  private var state: State = new MainMenu(this)
+
+  override def newGame(): Unit = {
+    state.toGameConfiguration()
+  }
+
+  override def goToMenu(): Unit = {
+    state.toMainMenu()
+  }
+
+  override def addToDeck(): Unit = {
 
   }
 
-  def goToMenu(): Unit = {
+  override def addCard(): Unit = {
 
   }
 
-  def addToDeck(): Unit = {
+  override def setName(): Unit = {
 
   }
 
-  def addCard(): Unit = {
-
+  override def startGame(): Unit = {
+    state.toGameStart()
   }
 
-  def setName(): Unit = {
-
+  override def prepareRound(): Unit = {
+    state.toRoundStart()
+  }
+  override def startRound(): Unit = {
+    state.Comply()
   }
 
-  def startGame(): Unit = {
-
+  override def playCard(): Unit = {
+    state.Comply()
   }
 
-  def startRound(): Unit = {
-
+  override def Pass(): Unit = {
+    state.Pass()
   }
 
-  def playCard(): Unit = {
-
+  override def nextRound(): Unit = {
+    state.Comply()
   }
 
-  def Pass(): Unit = {
-
+  override def getState(): State = {
+    state
   }
-
-  def nextRound(): Unit = {
-
-  }
-
-  def getState(): State = new State(this)
 
   override def setState(C: State): Unit = {
-
+    state = C
   }
 }
