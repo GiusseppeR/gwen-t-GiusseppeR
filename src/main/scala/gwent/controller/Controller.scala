@@ -53,7 +53,8 @@ class Controller extends IController {
   }
 
   override def getState(): State = {
-    state
+    val clone = state
+    clone
   }
 
   override def setState(C: State): Unit = {
