@@ -3,6 +3,7 @@ package gwent.board
 
 import gwent.player.*
 import gwent.cards.*
+import gwent.effects.*
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -23,5 +24,7 @@ trait IBoardSide {
   def addToCCzone(C: CloseCombat):Unit
   def addToSiegeZone(C: Siege):Unit
   def addToRangeZone(C:Range):Unit
+
+  def notifyCards(effect: IEffect):Unit
 
 }

@@ -5,6 +5,8 @@ import gwent.board.*
 import gwent.cards.*
 import gwent.player.*
 
+import cl.uchile.dcc.gwent.effects.IEffect
+
 /** Represents a Unit Card.
  *
  * Implements IUnitCard;
@@ -15,7 +17,11 @@ import gwent.player.*
  * @constructor Creates a card with a name and a number of Strength Points.
  */
 abstract class AbstractUnitCard(name:String, private var SP:Int) extends AbstractCard(name) with IUnitCard{
+  protected var effect: IEffect
 
+  override def update(Effect: IEffect): Unit = {
+
+  }
   /** Provides the number of Strength Points associated with a Unit Card.
    *
    * @return The SP variable used in the constructor.

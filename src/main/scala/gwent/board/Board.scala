@@ -5,6 +5,8 @@ import gwent.cards.*
 import gwent.player.*
 import gwent.board.*
 
+import cl.uchile.dcc.gwent.effects.IEffect
+
 import scala.collection.mutable.ArrayBuffer
 
 /** Represents a board.
@@ -31,6 +33,9 @@ import scala.collection.mutable.ArrayBuffer
  * }}}
  */
 class Board extends IBoard {
+  override def notifyCards(effect: IEffect): Unit = {
+
+  }
   /** Stores the weather cards played.
    * Has a Clear Weather card in as default.
    */

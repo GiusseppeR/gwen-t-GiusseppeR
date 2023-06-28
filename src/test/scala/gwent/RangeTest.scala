@@ -8,14 +8,14 @@ import munit.FunSuite
 import scala.collection.mutable.ArrayBuffer
 
 class RangeTest extends FunSuite {
-  var Card1: cards.Range = _
-  var Card2: cards.Range = _
+  var Card1: Range = _
+  var Card2: Range = _
 
   var Board: Board = _
   var Player: Player = _
   override def beforeEach(context:BeforeEach):Unit = {
-    Card1 = new cards.Range("The Hierophant", 6)
-    Card2 = new cards.Range("The High Priestess", 6)
+    Card1 = new Range("The Hierophant", 6)
+    Card2 = new Range("The High Priestess", 6)
 
     Board = new Board()
     Player = new Player("Polnareff", ArrayBuffer(Card1, Card2))

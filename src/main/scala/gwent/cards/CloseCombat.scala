@@ -4,7 +4,7 @@ package gwent.cards
 import gwent.board.*
 import gwent.cards.*
 import gwent.player.*
-
+import gwent.effects.*
 import java.util.Objects
 
 /** Represents a Close Combat Unit Card
@@ -12,6 +12,12 @@ import java.util.Objects
  * Extends AbstractUnitCard
  */
 class CloseCombat(name:String,SP:Int) extends AbstractUnitCard(name,SP){
+  protected var effect: IEffect = new NullEffect()
+
+  def this(name: String, SP:Int, Effect: IEffect) = {
+    this(name,SP)
+    effect = Effect
+  }
   /** Tells to a BoardSide object that a Close Combat card was played.
    *
    * Finishes the double dispatch process initiated by the playCard method from Player class.

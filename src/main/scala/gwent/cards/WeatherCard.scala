@@ -3,6 +3,8 @@ package gwent.cards
 
 import gwent.player.*
 
+import cl.uchile.dcc.gwent.effects.{IEffect, NullEffect}
+
 import java.util.Objects
 
 /** Represents a Weather Card
@@ -10,6 +12,11 @@ import java.util.Objects
  * Extends AbstractCard
  */
 class WeatherCard(name:String) extends AbstractCard(name){
+  protected var effect: IEffect = new NullEffect()
+  def this(name:String, Effect: IEffect) = {
+    this(name)
+    effect = Effect
+  }
 
   /** Tells the Board Object linked to player that a weather card was played.
    *

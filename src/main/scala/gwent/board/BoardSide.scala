@@ -5,6 +5,8 @@ import gwent.cards.*
 import gwent.player.*
 import gwent.board.*
 
+import cl.uchile.dcc.gwent.effects.IEffect
+
 import java.util.Objects
 import scala.collection.mutable.ArrayBuffer
 
@@ -18,6 +20,9 @@ import scala.collection.mutable.ArrayBuffer
  * @constructor Creates an empty board side with a name.
  */
 class BoardSide(private val name: String) extends IBoardSide {
+  override def notifyCards(effect: IEffect): Unit = {
+
+  }
   /** Zone of close combat cards.
    * Stores close combat cards played.
    */
