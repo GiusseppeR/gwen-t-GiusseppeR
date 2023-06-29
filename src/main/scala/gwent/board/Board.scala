@@ -33,8 +33,10 @@ import scala.collection.mutable.ArrayBuffer
  * }}}
  */
 class Board extends IBoard {
-  override def notifyCards(effect: IEffect): Unit = {
-
+  override def notifyCards(C:ICard, effect: IEffect): Unit = {
+    for(player <- playerList){
+      player.getBoardSide().notifyCards(C, effect)
+    }
   }
   /** Stores the weather cards played.
    * Has a Clear Weather card in as default.

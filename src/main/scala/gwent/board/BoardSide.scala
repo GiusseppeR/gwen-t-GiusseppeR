@@ -20,8 +20,10 @@ import scala.collection.mutable.ArrayBuffer
  * @constructor Creates an empty board side with a name.
  */
 class BoardSide(private val name: String) extends IBoardSide {
-  override def notifyCards(effect: IEffect): Unit = {
-
+  override def notifyCards(C:ICard, effect: IEffect): Unit = {
+    for(card <- CardsOnBoard){
+      card.update(C,effect)
+    }
   }
   /** Zone of close combat cards.
    * Stores close combat cards played.

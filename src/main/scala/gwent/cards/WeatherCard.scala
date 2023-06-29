@@ -29,6 +29,7 @@ class WeatherCard(name:String) extends AbstractCard(name){
   override def sendCommand(P: Player): Unit = {
     try{
       P.getBoard().setWeatherCard(this)
+      P.getBoard().notifyCards(this,this.effect)
     } catch{
       case e:Exception => println("No Board")
     }

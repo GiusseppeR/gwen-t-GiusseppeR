@@ -28,6 +28,7 @@ class TightBondEffectTest extends FunSuite{
 
     Board = new Board()
     Player = new Player("Julius Caesar", ArrayBuffer(Card1,Card2,Card3,Card4))
+    Board.addPlayer(Player,"North")
   }
   test("The effect is applied properly, only to the cards of the same name"){
     Player.playCard(Card4)

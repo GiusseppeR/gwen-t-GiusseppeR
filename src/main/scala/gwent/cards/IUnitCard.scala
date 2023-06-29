@@ -13,7 +13,9 @@ import cl.uchile.dcc.gwent.effects.*
  * Used by AbstractUnitCard and its subclasses
  */
 trait IUnitCard{
+  def setSP(n:Int):Unit
   def getSP():Int
   def goToZone(B: BoardSide):Unit
-  def update(effect: IEffect):Unit
+  def update(C:ICard,effect: IEffect):Unit
+  def getName():String
 }

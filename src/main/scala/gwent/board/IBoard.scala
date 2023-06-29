@@ -17,6 +17,6 @@ trait IBoard {
   def getWinner(): Player
   def getCurrentWeatherCard(): WeatherCard
   def setWeatherCard(C:WeatherCard):Unit
-  def notifyCards(effect:IEffect):Unit
+  def notifyCards(C:ICard, effect:IEffect):Unit
 
 }

@@ -25,6 +25,6 @@ trait IBoardSide {
   def addToSiegeZone(C: Siege):Unit
   def addToRangeZone(C:Range):Unit
 
-  def notifyCards(effect: IEffect):Unit
+  def notifyCards(C:ICard, effect: IEffect):Unit
 
 }
