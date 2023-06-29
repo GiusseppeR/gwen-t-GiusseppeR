@@ -12,9 +12,3 @@ This project's goal is to create a (simplified) clone of the
 [_Gwent_](https://www.playgwent.com/en)card game developed by [_CD PROJEKT RED_](https://cdprojektred.com/en/)
 
 ---
-## EP4
-![State_diagram](https://drive.google.com/uc?id=10lcMaPZFeTs2so06rvRFOmniYr3t1xPf)
-
-As of now, the methods of the controller only work for transitioning between states.
-
-The state "CardSelection" depends on player input and was not taken into consideration for this EP.
