@@ -22,9 +22,6 @@ abstract class AbstractUnitCard(name:String, private var SP:Int) extends Abstrac
   override def setSP(n:Int):Unit ={
     SP = n
   }
-  override def update(C:ICard,Effect: IEffect): Unit = {
-    Effect(C,this)
-  }
   /** Provides the number of Strength Points associated with a Unit Card.
    *
    * @return The SP variable used in the constructor.
@@ -47,7 +44,6 @@ abstract class AbstractUnitCard(name:String, private var SP:Int) extends Abstrac
   override def sendCommand(P:Player): Unit = {
     try{
       P.getBoardSide().placeCard(this)
-      P.getBoardSide().notifyCards(this,this.effect)
     }catch{
       case e:Exception => println("No board side")
     }

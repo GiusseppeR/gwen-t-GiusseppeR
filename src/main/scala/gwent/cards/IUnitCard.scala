@@ -16,6 +16,5 @@ trait IUnitCard{
   def setSP(n:Int):Unit
   def getSP():Int
   def goToZone(B: BoardSide):Unit
-  def update(C:ICard,effect: IEffect):Unit
   def getName():String
 }
