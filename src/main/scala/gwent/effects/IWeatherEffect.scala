@@ -2,10 +2,9 @@ package cl.uchile.dcc
 package gwent.effects
 
 import gwent.cards.*
-
 import scala.collection.mutable.ArrayBuffer
+import gwent.board.*
 
-trait IEffect{
-  def apply[T <: IUnitCard](card: ICard, target:ArrayBuffer[T]):Unit
-  def copy(): IEffect
+trait IWeatherEffect extends IEffect{
+  def applyToBoard(B: IBoard): Unit
 }

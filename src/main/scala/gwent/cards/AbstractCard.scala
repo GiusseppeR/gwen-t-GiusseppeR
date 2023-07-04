@@ -14,9 +14,6 @@ import cl.uchile.dcc.gwent.effects.{NullEffect, *}
  * @constructor Creates a card with a name.
  */
 abstract class AbstractCard(private val name:String) extends ICard {
-
-  protected var effect:IEffect
-
   /** Provides the name of the card.
    *
    * @return The name used in the constructor.
@@ -25,6 +22,6 @@ abstract class AbstractCard(private val name:String) extends ICard {
 
   def sendCommand(P:Player): Unit
 
-  override def getEffect(): IEffect = effect
+  override def getEffect(): IEffect
 
 }

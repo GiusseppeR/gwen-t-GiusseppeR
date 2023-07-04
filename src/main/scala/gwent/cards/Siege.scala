@@ -12,9 +12,9 @@ import java.util.Objects
  * Extends AbstractUnitCard
  */
 class Siege(name:String,SP:Int) extends AbstractUnitCard(name,SP){
-  protected var effect: IEffect = new NullEffect()
+  protected var effect: IUnitEffect = new NullEffect()
 
-  def this(name: String, SP: Int, Effect: IEffect) = {
+  def this(name: String, SP: Int, Effect: IUnitEffect) = {
     this(name, SP)
     effect = Effect
   }
