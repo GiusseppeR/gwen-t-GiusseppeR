@@ -27,6 +27,7 @@ class Range(name:String,SP:Int) extends AbstractUnitCard(name,SP) {
    */
   def goToZone(B: BoardSide): Unit = {
     B.addToRangeZone(this)
+    B.applyRangeEffect(this)
   }
 
   override def equals(obj: Any): Boolean = {

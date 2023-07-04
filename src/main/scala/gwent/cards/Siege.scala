@@ -27,6 +27,7 @@ class Siege(name:String,SP:Int) extends AbstractUnitCard(name,SP){
    */
   def goToZone(B: BoardSide): Unit = {
     B.addToSiegeZone(this)
+    B.applySiegeEffect(this)
   }
 
   override def equals(obj: Any): Boolean = {

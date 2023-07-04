@@ -18,7 +18,6 @@ import cl.uchile.dcc.gwent.effects.IEffect
  */
 abstract class AbstractUnitCard(name:String, private var SP:Int) extends AbstractCard(name) with IUnitCard{
   protected var effect: IEffect
-
   override def setSP(n:Int):Unit ={
     SP = n
   }

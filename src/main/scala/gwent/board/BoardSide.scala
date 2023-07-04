@@ -122,6 +122,21 @@ class BoardSide(private val name: String) extends IBoardSide {
     CardsOnBoard.append(C)
   }
 
+  override def applyCCEffect(C:ICard): Unit = {
+    val Effect = C.getEffect()
+    Effect[CloseCombat](C,CCzone)
+  }
+
+  override def applyRangeEffect(C: ICard): Unit = {
+    val Effect = C.getEffect()
+    Effect[Range](C, RangeZone)
+  }
+
+  override def applySiegeEffect(C: ICard): Unit = {
+    val Effect = C.getEffect()
+    Effect[Siege](C, SiegeZone)
+  }
+
   /** Provides the sum of the strength points of all cards played.
    *
    * @return An integer; sum of the strength points of all elements in CardsOnBoard.

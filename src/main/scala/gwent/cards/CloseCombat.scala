@@ -27,6 +27,7 @@ class CloseCombat(name:String,SP:Int) extends AbstractUnitCard(name,SP){
    */
   def goToZone(B: BoardSide): Unit = {
     B.addToCCzone(this)
+    B.applyCCEffect(this)
   }
 
   override def equals(obj: Any): Boolean = {

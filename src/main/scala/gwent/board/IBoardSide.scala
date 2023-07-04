@@ -25,8 +25,8 @@ trait IBoardSide {
   def addToSiegeZone(C: Siege):Unit
   def addToRangeZone(C:Range):Unit
 
-  def applyCCEffect(E:IEffect):Unit
-  def applySiegeEffect(E:IEffect):Unit
-  def applyRangeEffect(E:IEffect):Unit
+  def applyCCEffect(C:ICard):Unit
+  def applySiegeEffect(C: ICard):Unit
+  def applyRangeEffect(C:ICard):Unit
 
 }
