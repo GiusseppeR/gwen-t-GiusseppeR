@@ -1,16 +1,16 @@
 package cl.uchile.dcc
-package gwent
+package gwent.controller
 
 import gwent.board.*
 import gwent.cards.*
-import gwent.player.*
 import gwent.controller.*
+import gwent.player.*
 import gwent.states.*
+import gwent.states.controller.*
 
-import cl.uchile.dcc.gwent.states.{EndOfGame, EndOfRound, GameConfiguration, GameStart, MainMenu, Passed, RoundStart}
 import munit.FunSuite
 
-class ControllerTest extends FunSuite {
+class ControllerStateTransitionTest extends FunSuite {
   var Controller:Controller = _
   override def beforeEach(context: BeforeEach): Unit = {
     Controller = new Controller()
@@ -32,16 +32,7 @@ class ControllerTest extends FunSuite {
     assert(Controller.getState().isInstanceOf[RoundStart])
 
     Controller.startRound()
-    assert(Controller.getState().isInstanceOf[First])
-
-    Controller.playCard()
-    assert(Controller.getState().isInstanceOf[Second])
-
-    Controller.playCard()
-    assert(Controller.getState().isInstanceOf[First])
-
-    Controller.Pass()
-    assert(Controller.getState().isInstanceOf[Passed])
+    assert(Controller.getState().isInstanceOf[Idle])
 
     Controller.Pass()
     assert(Controller.getState().isInstanceOf[EndOfRound])
@@ -56,6 +47,6 @@ class ControllerTest extends FunSuite {
 
     Controller.setState(new RoundStart(Controller))
     Controller.startRound()
-    assert(Controller.getState().isInstanceOf[First])
+    assert(Controller.getState().isInstanceOf[Idle])
   }
 }

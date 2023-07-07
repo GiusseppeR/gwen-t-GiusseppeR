@@ -4,6 +4,9 @@ package gwent.player
 import gwent.board.*
 import gwent.cards.*
 
+import cl.uchile.dcc.gwent.notifications.PlayerControllerNotification
+import cl.uchile.dcc.gwent.states.player.PlayerState
+
 import scala.collection.mutable.ArrayBuffer
 
 /** Defines a Player.
@@ -25,4 +28,8 @@ trait Iplayer {
   def getBoard():Board
   def setBoardSide(side: BoardSide):Unit
   def getBoardSide():BoardSide
+  def getState():PlayerState
+  def setState():Unit
+  def addController():Unit
+  def notifyController(notification:PlayerControllerNotification):Unit
 }

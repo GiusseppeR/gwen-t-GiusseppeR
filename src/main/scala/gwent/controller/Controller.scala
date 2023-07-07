@@ -6,8 +6,12 @@ import gwent.cards.*
 import gwent.player.*
 import gwent.states.*
 
+import cl.uchile.dcc.gwent.notifications.PlayerControllerNotification
+import cl.uchile.dcc.gwent.states.controller.{ControllerState, MainMenu}
+
 class Controller extends IController {
-  private var state: State = new MainMenu(this)
+  private var state: ControllerState = new MainMenu(this)
+  private var currentPlayer: Option[Player] = None
 
   override def newGame(): Unit = {
     state.toGameConfiguration()
@@ -44,20 +48,29 @@ class Controller extends IController {
     state.Comply()
   }
 
-  override def Pass(): Unit = {
-    state.Pass()
+  override def setPlayer(): Unit = {
+
+  }
+
+  override def getPlayer(): Option[Player] = currentPlayer
+
+  override def endRound(): Unit = {
   }
 
   override def nextRound(): Unit = {
     state.Comply()
   }
 
-  override def getState(): State = {
+  override def getState(): ControllerState = {
     val clone = state
     clone
   }
 
-  override def setState(C: State): Unit = {
+  override def setState(C: ControllerState): Unit = {
     state = C
+  }
+
+  override def playerUpdate(notification: PlayerControllerNotification): Unit = {
+
   }
 }

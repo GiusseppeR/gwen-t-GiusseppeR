@@ -1,11 +1,14 @@
 package cl.uchile.dcc
-package gwent
+package gwent.board
 
 import gwent.board.*
+import gwent.cards
 import gwent.cards.*
 import gwent.player.*
+
 import munit.FunSuite
 import org.junit.internal.runners.statements.ExpectException
+
 import scala.collection.mutable.ArrayBuffer
 
 class BoardTest extends FunSuite {

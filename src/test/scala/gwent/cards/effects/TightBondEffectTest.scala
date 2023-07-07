@@ -1,12 +1,11 @@
 package cl.uchile.dcc
-package gwent
+package gwent.cards.effects
 
-import munit.FunSuite
 import gwent.board.*
 import gwent.cards.*
+import gwent.effects.{NullEffect, TightBondEffect}
 import gwent.player.*
 
-import cl.uchile.dcc.gwent.effects.{NullEffect, TightBondEffect}
 import munit.FunSuite
 
 import scala.collection.mutable.ArrayBuffer

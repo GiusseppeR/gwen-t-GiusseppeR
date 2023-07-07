@@ -4,6 +4,10 @@ package gwent.player
 import gwent.board.*
 import gwent.cards.*
 
+import cl.uchile.dcc.gwent.controller.Controller
+import cl.uchile.dcc.gwent.notifications.*
+import cl.uchile.dcc.gwent.states.player.*
+
 import java.util.Objects
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
@@ -29,6 +33,8 @@ import scala.util.Random
  * }}}
  */
 class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) extends Iplayer {
+  private var controller: Option[Controller] = None
+  private var state:PlayerState = new Playing()
   /** Current state of the introduced deck.
    * Equal to the initial deck by default.
    */
@@ -148,6 +154,9 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
    */
   override def takeDamage(): Unit = {
     Gems = Gems - 1
+    if (Gems == 0){
+      state.toDefeated() /*agregar llamada a notificacion en estado*/
+    }
   }
 
   /** Shows the hand of the player.
@@ -206,6 +215,22 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
     deck --= slice  //slice is removed from deck
   }
 
+  override def getState(): PlayerState = {
+    state
+  }
+
+  override def setState(S: PlayerState): Unit = {
+    state = S
+  }
+
+  override def addController(): Unit = {
+
+  }
+
+  override def notifyController(notification:PlayerControllerNotification): Unit = {
+
+  }
+
   override def equals(obj: Any): Boolean = {
     if (obj.isInstanceOf[Player]) {
       val other = obj.asInstanceOf[Player]
@@ -214,6 +239,7 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
       false
     }
   }
+
 
   override def hashCode(): Int = {
     System.identityHashCode(this)

@@ -1,7 +1,8 @@
 package cl.uchile.dcc
-package gwent
+package gwent.board
 
 import gwent.board.*
+import gwent.cards
 import gwent.cards.*
 import gwent.player.*
 
