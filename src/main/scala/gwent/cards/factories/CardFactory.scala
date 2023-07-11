@@ -1,7 +1,13 @@
 package cl.uchile.dcc
 package gwent.cards.factories
+import gwent.cards.{ICard, WeatherCard}
 
-import gwent.cards.*
+class CardFactory extends ICardFactory {
+  private var Card: Option[ICard] = None
 
-trait CardFactory[T <: ICard] {
+  override def setCard(C: ICard): Unit = {
+    Card = Some(C)
+  }
+
+  override def createCard(): ICard = Card.get
 }

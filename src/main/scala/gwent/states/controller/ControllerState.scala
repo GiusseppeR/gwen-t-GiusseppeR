@@ -5,15 +5,17 @@ import gwent.board.*
 import gwent.cards.*
 import gwent.controller.*
 import gwent.player.*
+
 import cl.uchile.dcc.gwent.states.*
 
+import scala.collection.mutable.ListBuffer
+
 class ControllerState(private var context:Controller) extends State{
-  def Comply():Unit = {
-
-  }
-  def Pass():Unit = {
-
-  }
+  def Comply():Unit = {}
+  def setNumberOfEnemies(n:Int):Unit = {}
+  def setName(name:String):Unit = {}
+  def setEnemy(name:String):Unit = {}
+  def startGame():ListBuffer[Iplayer] = ListBuffer()
   def toMainMenu():Unit = {
     transitionError("Main Menu")
   }

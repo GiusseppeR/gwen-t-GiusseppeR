@@ -34,7 +34,7 @@ import scala.util.Random
  */
 class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) extends Iplayer {
   private var controller: Option[Controller] = None
-  private var state:PlayerState = new Playing()
+  private var state:PlayerState = new Playing(this)
   /** Current state of the introduced deck.
    * Equal to the initial deck by default.
    */
@@ -155,7 +155,8 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
   override def takeDamage(): Unit = {
     Gems = Gems - 1
     if (Gems == 0){
-      state.toDefeated() /*agregar llamada a notificacion en estado*/
+      state.toDefeated()
+      notifyController(new PlayerDefeated(this))
     }
   }
 
@@ -215,20 +216,20 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
     deck --= slice  //slice is removed from deck
   }
 
-  override def getState(): PlayerState = {
-    state
+  override def getState(): String= {
+    state.toString
   }
 
   override def setState(S: PlayerState): Unit = {
     state = S
   }
 
-  override def addController(): Unit = {
-
+  override def addController(C:Controller): Unit = {
+    controller = Some(C)
   }
 
   override def notifyController(notification:PlayerControllerNotification): Unit = {
-
+    controller.get.playerUpdate(notification)
   }
 
   override def equals(obj: Any): Boolean = {

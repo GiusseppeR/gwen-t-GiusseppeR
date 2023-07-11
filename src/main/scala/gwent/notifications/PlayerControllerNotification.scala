@@ -1,8 +1,8 @@
 package cl.uchile.dcc
 package gwent.notifications
 
-import gwent.controller.IController
+import gwent.controller.*
 
 trait PlayerControllerNotification {
-  def open(controller: IController):Unit
+  def open(controller: Controller):Unit
 }

@@ -3,10 +3,10 @@ package gwent.notifications
 
 import gwent.player.Iplayer
 
-import cl.uchile.dcc.gwent.controller.IController
+import cl.uchile.dcc.gwent.controller.*
 
 class PlayerDefeated(P:Iplayer) extends PlayerControllerNotification {
-  override def open(controller: IController):Unit = {
-
+  override def open(controller: Controller):Unit = {
+    controller.moveToDefeated(P)
   }
 }

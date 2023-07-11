@@ -4,5 +4,5 @@ package gwent.states.player
 import gwent.player.*
 
 class Defeated(context:Iplayer) extends PlayerState(context) {
-
+  override def toString: String = "Defeated"
 }

@@ -3,6 +3,7 @@ package gwent.cards.factories
 
 import gwent.cards.*
 
-class RangeCardFactory extends CardFactory[Range] {
-
+trait ICardFactory{
+  def setCard(C:ICard):Unit
+  def createCard():ICard
 }

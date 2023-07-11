@@ -6,6 +6,7 @@ import gwent.cards.*
 
 import cl.uchile.dcc.gwent.notifications.PlayerControllerNotification
 import cl.uchile.dcc.gwent.states.player.PlayerState
+import gwent.controller.*
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -28,8 +29,8 @@ trait Iplayer {
   def getBoard():Board
   def setBoardSide(side: BoardSide):Unit
   def getBoardSide():BoardSide
-  def getState():PlayerState
-  def setState():Unit
-  def addController():Unit
+  def getState():String
+  def setState(S:PlayerState):Unit
+  def addController(C:Controller):Unit
   def notifyController(notification:PlayerControllerNotification):Unit
 }
