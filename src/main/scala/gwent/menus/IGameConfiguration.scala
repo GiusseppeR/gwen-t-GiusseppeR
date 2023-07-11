@@ -9,6 +9,6 @@ trait IGameConfiguration {
   def setNumberOfEnemies(n:Int):Unit
   def setEnemy(name:String):Unit
   def createEnemies():Unit
-  def getPlayerList():List[Iplayer]
+  def getPlayerList():List[Player]
   def startGame():Unit
 }

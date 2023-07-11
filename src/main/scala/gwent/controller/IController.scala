@@ -25,8 +25,7 @@ trait IController {
   def endRound():Unit
   def getState():ControllerState
   def setState(C: ControllerState): Unit
-  def playerUpdate(notification: PlayerControllerNotification):Unit
-  def moveToDefeated(P:Iplayer):Unit
+  def moveToDefeated(P:Player):Unit
   def getDefeatedPlayerNames:List[String]
   def getActivePlayerNames:List[String]
 

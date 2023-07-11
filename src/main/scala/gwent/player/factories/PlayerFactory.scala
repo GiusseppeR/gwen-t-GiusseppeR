@@ -14,7 +14,7 @@ class PlayerFactory extends IPlayerFactory {
   override def setDeck(d:ArrayBuffer[ICard]): Unit = {
     deck = Some(d)
   }
-  override def createPlayer():Iplayer = {
+  override def createPlayer():Player = {
     new Player(name.get,deck.get)
   }
 }

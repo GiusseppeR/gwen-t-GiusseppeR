@@ -4,7 +4,7 @@ package gwent.states.controller
 import gwent.controller.*
 
 import cl.uchile.dcc.gwent.menus.GameConfigurationScreen
-import cl.uchile.dcc.gwent.player.Iplayer
+import cl.uchile.dcc.gwent.player.*
 
 import scala.collection.mutable.ListBuffer
 class GameConfiguration(context:Controller) extends ControllerState(context){
@@ -18,8 +18,8 @@ class GameConfiguration(context:Controller) extends ControllerState(context){
   override def setEnemy(name:String):Unit = {
     gameConfiguration.setEnemy(name)
   }
-  override def startGame():ListBuffer[Iplayer] = {
-    val out:ListBuffer[Iplayer] = ListBuffer()
+  override def startGame():ListBuffer[Player] = {
+    val out:ListBuffer[Player] = ListBuffer()
     gameConfiguration.createEnemies()
     gameConfiguration.startGame()
     out ++= gameConfiguration.getPlayerList()

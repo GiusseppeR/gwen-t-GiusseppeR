@@ -6,7 +6,8 @@ import gwent.cards.*
 import gwent.player.*
 import gwent.states.*
 
-import cl.uchile.dcc.gwent.notifications.PlayerControllerNotification
+import cl.uchile.dcc.gwent.notifications.*
+import cl.uchile.dcc.gwent.observer.*
 import cl.uchile.dcc.gwent.states.controller.{ControllerState, MainMenu}
 
 import scala.collection.mutable
@@ -15,15 +16,15 @@ import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.Map
 import scala.util.Random
 
-class Controller extends IController {
+class Controller extends IController with Observer[PlayerControllerNotification] {
   private var state: ControllerState = new MainMenu(this)
-  private var user: Option[Iplayer] = None
-  private var playerList: ListBuffer[Iplayer] = ListBuffer()
-  private var currentPlayer: Option[Iplayer] = None
+  private var user: Option[Player] = None
+  private var playerList: ListBuffer[Player] = ListBuffer()
+  private var currentPlayer: Option[Player] = None
 
-  private val activePlayers:ListBuffer[Iplayer] = ListBuffer()
-  private val defeatedPlayers:ListBuffer[Iplayer] = ListBuffer()
-  private val passedPlayer:ListBuffer[Iplayer] = ListBuffer()
+  private val activePlayers:ListBuffer[Player] = ListBuffer()
+  private val defeatedPlayers:ListBuffer[Player] = ListBuffer()
+  private val passedPlayer:ListBuffer[Player] = ListBuffer()
 
   override def newGame(): Unit = {
     state.toGameConfiguration()
@@ -43,7 +44,7 @@ class Controller extends IController {
   override def startGame(): Unit = {
     playerList = state.startGame()
     user = Some(playerList.head)
-    playerList.foreach(p => p.addController(this))
+    playerList.foreach(p => p.addObserver(this) )
     activePlayers ++= Random.shuffle(playerList)
     state.toIdle()
   }
@@ -64,11 +65,11 @@ class Controller extends IController {
     state = C
   }
 
-  override def playerUpdate(notification: PlayerControllerNotification): Unit = {
-    notification.open(this)
+  override def update(observable:Subject[PlayerControllerNotification], value: PlayerControllerNotification): Unit = {
+    value.open(this)
   }
 
-  override def moveToDefeated(P: Iplayer): Unit = {
+  override def moveToDefeated(P: Player): Unit = {
     activePlayers -= P
     defeatedPlayers += P
   }
@@ -85,7 +86,7 @@ class Controller extends IController {
 
   override def destroy(name:String):Unit = {
     state.toEOR()
-    var Player:Iplayer = new Player("",ArrayBuffer())
+    var Player:Player = new Player("",ArrayBuffer())
     for(C <- playerList){
       if(C.getName() == name){
         Player = C

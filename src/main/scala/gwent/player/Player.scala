@@ -7,7 +7,7 @@ import gwent.cards.*
 import cl.uchile.dcc.gwent.controller.Controller
 import cl.uchile.dcc.gwent.notifications.*
 import cl.uchile.dcc.gwent.states.player.*
-
+import gwent.observer.*
 import java.util.Objects
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
@@ -32,8 +32,7 @@ import scala.util.Random
  * var Hand = Player1.currentHand() // ArrayBuffer(Card1,Card2,...Card10)
  * }}}
  */
-class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) extends Iplayer {
-  private var controller: Option[Controller] = None
+class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) extends AbstractSubject[PlayerControllerNotification] with Iplayer {
   private var state:PlayerState = new Playing(this)
   /** Current state of the introduced deck.
    * Equal to the initial deck by default.
@@ -156,7 +155,7 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
     Gems = Gems - 1
     if (Gems == 0){
       state.toDefeated()
-      notifyController(new PlayerDefeated(this))
+      notifyObservers(new PlayerDefeated(this))
     }
   }
 
@@ -224,18 +223,11 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
     state = S
   }
 
-  override def addController(C:Controller): Unit = {
-    controller = Some(C)
-  }
-
-  override def notifyController(notification:PlayerControllerNotification): Unit = {
-    controller.get.playerUpdate(notification)
-  }
-
   override def equals(obj: Any): Boolean = {
     if (obj.isInstanceOf[Player]) {
       val other = obj.asInstanceOf[Player]
-      (this eq other)
+      (this eq other) ||
+        other.getName() == name
     } else {
       false
     }
@@ -243,7 +235,7 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
 
 
   override def hashCode(): Int = {
-    System.identityHashCode(this)
+    Objects.hash(classOf[Player], name)
   }
   shuffleDeck()
   takeCard(10)

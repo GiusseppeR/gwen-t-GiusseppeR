@@ -31,6 +31,4 @@ trait Iplayer {
   def getBoardSide():BoardSide
   def getState():String
   def setState(S:PlayerState):Unit
-  def addController(C:Controller):Unit
-  def notifyController(notification:PlayerControllerNotification):Unit
 }

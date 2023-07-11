@@ -15,7 +15,7 @@ class ControllerState(private var context:Controller) extends State{
   def setNumberOfEnemies(n:Int):Unit = {}
   def setName(name:String):Unit = {}
   def setEnemy(name:String):Unit = {}
-  def startGame():ListBuffer[Iplayer] = ListBuffer()
+  def startGame():ListBuffer[Player] = ListBuffer()
   def toMainMenu():Unit = {
     transitionError("Main Menu")
   }

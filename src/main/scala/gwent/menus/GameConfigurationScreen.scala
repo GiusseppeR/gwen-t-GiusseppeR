@@ -15,7 +15,7 @@ class GameConfigurationScreen extends IGameConfiguration {
   private var numberOfEnemies:Int = 1
   private val CardPool = new DefaultCardPool()
   private val CardList = CardPool.createCardPool()
-  private var PlayerList: ListBuffer[Iplayer] = ListBuffer()
+  private var PlayerList: ListBuffer[Player] = ListBuffer()
   private var ChosenEnemies: mutable.Queue[String] = mutable.Queue()
   private val namePool: List[String] = List("Germany","Japan","United States of America", "Soviet Union", "Great Britain")
   private var Factory: PlayerFactory = new PlayerFactory()
@@ -55,7 +55,7 @@ class GameConfigurationScreen extends IGameConfiguration {
     PlayerName = Some(name)
   }
 
-  override def getPlayerList(): List[Iplayer] = {
+  override def getPlayerList(): List[Player] = {
     val output = PlayerList.toList
     output
   }

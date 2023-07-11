@@ -9,5 +9,5 @@ import scala.collection.mutable.ArrayBuffer
 trait IPlayerFactory {
   def setDeck(D:ArrayBuffer[ICard]):Unit
   def setName(name: String):Unit
-  def createPlayer():Iplayer
+  def createPlayer():Player
 }
