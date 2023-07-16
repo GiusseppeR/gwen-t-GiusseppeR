@@ -5,6 +5,9 @@ import gwent.board.*
 import gwent.cards.*
 import gwent.player.*
 import gwent.effects.*
+
+import cl.uchile.dcc.gwent.cards.ref.RangeRef
+
 import java.util.Objects
 
 /** Represents a Range Unit Card
@@ -12,11 +15,10 @@ import java.util.Objects
  * Extends UnitCard
  */
 class Range(name:String,SP:Int) extends AbstractUnitCard(name,SP) {
-  protected var effect: IUnitEffect = new NullEffect()
-
-  def this(name: String, SP: Int, Effect: IUnitEffect) = {
+  def this(name: String, SP: Int, Effect: IEffect) = {
     this(name, SP)
     effect = Effect
+    effect.setCard(this)
   }
   /** Tells the BoardSide object that a Range card was played.
    *
@@ -27,7 +29,15 @@ class Range(name:String,SP:Int) extends AbstractUnitCard(name,SP) {
    */
   def goToZone(B: BoardSide): Unit = {
     B.addToRangeZone(this)
-    B.applyRangeEffect(this)
+  }
+
+  override def callRef(): IUnitCard = RangeRef
+
+  override def typeCheck(C: IUnitCard): Boolean = {
+    C match {
+      case _: Range => true
+      case _ => false
+    }
   }
 
   override def equals(obj: Any): Boolean = {
@@ -35,7 +45,8 @@ class Range(name:String,SP:Int) extends AbstractUnitCard(name,SP) {
       val other = obj.asInstanceOf[Range]
       (this eq other) ||
         other.getName() == name &&
-          other.getSP() == SP
+          other.getSP() == SP &&
+          other.getEffect() == effect
     } else {
       false
     }

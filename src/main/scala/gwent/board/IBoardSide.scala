@@ -6,6 +6,7 @@ import gwent.cards.*
 import gwent.effects.*
 
 import scala.collection.mutable.ArrayBuffer
+import gwent.observer.*
 
 /** Defines a board side.
  *
@@ -20,13 +21,9 @@ trait IBoardSide {
   def getCCzone():ArrayBuffer[CloseCombat]
   def getRangeZone():ArrayBuffer[Range]
   def getSiegeZone():ArrayBuffer[Siege]
-  def placeCard(C: IUnitCard):Unit
+  def placeCard(C: IUnitCard, O: Observer[IEffect]):Unit
   def addToCCzone(C: CloseCombat):Unit
   def addToSiegeZone(C: Siege):Unit
   def addToRangeZone(C:Range):Unit
-
-  def applyCCEffect(C:ICard):Unit
-  def applySiegeEffect(C: ICard):Unit
-  def applyRangeEffect(C:ICard):Unit
 
 }

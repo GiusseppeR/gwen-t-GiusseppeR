@@ -6,6 +6,7 @@ import gwent.player.*
 import gwent.board.*
 
 import cl.uchile.dcc.gwent.effects.IEffect
+import cl.uchile.dcc.gwent.observer.AbstractSubject
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -32,7 +33,7 @@ import scala.collection.mutable.ArrayBuffer
  * Board.addPlayer("Player2", "Ruins of Lordaeron")
  * }}}
  */
-class Board extends IBoard {
+class Board extends AbstractSubject[IEffect] with IBoard {
   /** Stores the weather cards played.
    * Has a Clear Weather card in as default.
    */
@@ -134,6 +135,7 @@ class Board extends IBoard {
    */
   override def setWeatherCard(C:WeatherCard):Unit = {
     weatherZone.prepend(C)
+    notifyObservers(C.getEffect())
   }
 
   override def equals(obj: Any): Boolean = {

@@ -3,6 +3,7 @@ package gwent.cards
 
 import gwent.board.*
 import gwent.cards.*
+import gwent.cards.ref.*
 import gwent.player.*
 import gwent.effects.*
 import java.util.Objects
@@ -12,11 +13,10 @@ import java.util.Objects
  * Extends AbstractUnitCard
  */
 class Siege(name:String,SP:Int) extends AbstractUnitCard(name,SP){
-  protected var effect: IUnitEffect = new NullEffect()
-
-  def this(name: String, SP: Int, Effect: IUnitEffect) = {
+  def this(name: String, SP: Int, Effect: IEffect) = {
     this(name, SP)
     effect = Effect
+    effect.setCard(this)
   }
   /** Tells the BoardSide object that a Siege card was played.
    *
@@ -27,15 +27,21 @@ class Siege(name:String,SP:Int) extends AbstractUnitCard(name,SP){
    */
   def goToZone(B: BoardSide): Unit = {
     B.addToSiegeZone(this)
-    B.applySiegeEffect(this)
   }
-
+  override def typeCheck(C: IUnitCard): Boolean = {
+    C match {
+      case _:Siege => true
+      case _ => false
+    }
+  }
+  override def callRef(): IUnitCard = SiegeRef
   override def equals(obj: Any): Boolean = {
     if (obj.isInstanceOf[Siege]) {
       val other = obj.asInstanceOf[Siege]
       (this eq other) ||
         other.getName() == name &&
-          other.getSP() == SP
+          other.getSP() == SP &&
+          other.getEffect() == effect
     }else {
       false
     }

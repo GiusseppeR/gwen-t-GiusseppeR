@@ -32,4 +32,5 @@ class GameConfiguration(context:Controller) extends ControllerState(context){
   override def toIdle(): Unit = {
     context.setState(new Idle(context))
   }
+
 }

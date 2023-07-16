@@ -2,7 +2,7 @@ package cl.uchile.dcc
 package gwent.menus
 
 import gwent.player.*
-import gwent.cards.pool.DefaultCardPool
+import gwent.cards.pool.*
 import cl.uchile.dcc.gwent.cards.*
 import cl.uchile.dcc.gwent.player.factories.PlayerFactory
 import scala.collection.mutable
@@ -13,11 +13,13 @@ import scala.util.Random
 
 class GameConfigurationScreen extends IGameConfiguration {
   private var numberOfEnemies:Int = 1
-  private val CardPool = new DefaultCardPool()
-  private val CardList = CardPool.createCardPool()
+
+  private val Pool = new CardPool()
+
   private var PlayerList: ListBuffer[Player] = ListBuffer()
   private var ChosenEnemies: mutable.Queue[String] = mutable.Queue()
   private val namePool: List[String] = List("Germany","Japan","United States of America", "Soviet Union", "Great Britain")
+
   private var Factory: PlayerFactory = new PlayerFactory()
   private var PlayerName:Option[String] = None
 
@@ -27,9 +29,19 @@ class GameConfigurationScreen extends IGameConfiguration {
   }
 
   private def createDeck():ArrayBuffer[ICard] = {
-    val deck:ArrayBuffer[ICard] = ArrayBuffer()
-    deck ++= Random.shuffle(CardList).slice(0,25)
-    deck
+    val output:ArrayBuffer[ICard] = ArrayBuffer()
+    val newPool = Pool.copy
+    val cards = newPool.getCardsInfo
+
+    val cardsLength = cards.length
+    var count = 0
+
+    while(count < 25){
+      val card = cards(Random.nextInt(cardsLength))
+      val addCard = newPool.addToDeck(output,card)
+      if addCard then count += 1
+    }
+    output
   }
   override def setNumberOfEnemies(n: Int): Unit = {
     numberOfEnemies = n

@@ -12,9 +12,12 @@ import cl.uchile.dcc.gwent.effects.*
  * Methods must be specified in class.
  * Used by AbstractUnitCard and its subclasses
  */
-trait IUnitCard{
-  def setSP(n:Int):Unit
+trait IUnitCard extends ICard{
+  def setSP(f: Int => Int):Unit
+  def overrideSp(n:Int):Unit
   def getSP():Int
+  def getStackedSP():Int
   def goToZone(B: BoardSide):Unit
-  def getName():String
+  def typeCheck(C:IUnitCard):Boolean
+  def callRef():IUnitCard
 }

@@ -78,17 +78,17 @@ class BoardSideTest extends FunSuite{
     val Rzone = ArrayBuffer(Card2)
     val Szone = ArrayBuffer(Card3)
 
-    Side.placeCard(Card1)
-    Side.placeCard(Card2)
-    Side.placeCard(Card3)
+    Side.placeCard(Card1,Card1)
+    Side.placeCard(Card2,Card2)
+    Side.placeCard(Card3, Card3)
 
     assertEquals(Side.getCCzone(), CCzone)
     assertEquals(Side.getRangeZone(), Rzone)
     assertEquals(Side.getSiegeZone(), Szone)
 
-    Side.placeCard(Card4)
-    Side.placeCard(Card5)
-    Side.placeCard(Card6)
+    Side.placeCard(Card4,Card4)
+    Side.placeCard(Card5,Card5)
+    Side.placeCard(Card6,Card6)
 
     assertNotEquals(Side.getCCzone(), CCzone)
     assertNotEquals(Side.getRangeZone(), Rzone)
@@ -99,12 +99,12 @@ class BoardSideTest extends FunSuite{
 
     assertEquals(score,Side.getPoints())
 
-    Side.placeCard(Card1)
+    Side.placeCard(Card1,Card1)
     score = 15
 
     assertEquals(score,Side.getPoints())
 
-    Side.placeCard(Card2)
+    Side.placeCard(Card2,Card2)
     score = 25
 
     assertEquals(score, Side.getPoints())

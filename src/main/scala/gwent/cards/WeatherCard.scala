@@ -3,7 +3,7 @@ package gwent.cards
 
 import gwent.player.*
 
-import cl.uchile.dcc.gwent.effects.{IEffect, IWeatherEffect, NullEffect}
+import cl.uchile.dcc.gwent.effects.{IEffect, NullEffect}
 
 import java.util.Objects
 
@@ -12,10 +12,7 @@ import java.util.Objects
  * Extends AbstractCard
  */
 class WeatherCard(name:String) extends AbstractCard(name){
-  protected var effect: IWeatherEffect = new NullEffect()
-
-  override def getEffect(): IEffect = effect
-  def this(name:String, Effect: IWeatherEffect) = {
+  def this(name:String, Effect: IEffect) = {
     this(name)
     effect = Effect
   }
@@ -31,7 +28,6 @@ class WeatherCard(name:String) extends AbstractCard(name){
   override def sendCommand(P: Player): Unit = {
     try{
       P.getBoard().setWeatherCard(this)
-      effect.applyToBoard(P.getBoard())
     } catch{
       case e:Exception => println("No Board")
     }

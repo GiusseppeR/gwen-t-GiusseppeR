@@ -179,8 +179,11 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
    * @param C Card chosen by the player.
    */
   override def playCard(C: ICard): Unit = {
-    this.currentHand() -= C
-    C.sendCommand(this)
+    if(Hand.contains(C)){
+      val index = Hand.indexOf(C)
+      Hand.remove(index)
+      C.sendCommand(this)
+    }
   }
 
   /** Takes a number of cards from the deck and adds them to the player hand.

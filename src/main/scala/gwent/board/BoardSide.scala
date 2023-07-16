@@ -5,7 +5,8 @@ import gwent.cards.*
 import gwent.player.*
 import gwent.board.*
 
-import cl.uchile.dcc.gwent.effects.IEffect
+import cl.uchile.dcc.gwent.effects.*
+import cl.uchile.dcc.gwent.observer.{AbstractSubject, Observer}
 
 import java.util.Objects
 import scala.collection.mutable.ArrayBuffer
@@ -19,7 +20,7 @@ import scala.collection.mutable.ArrayBuffer
  *
  * @constructor Creates an empty board side with a name.
  */
-class BoardSide(private val name: String) extends IBoardSide {
+class BoardSide(private val name: String) extends AbstractSubject[IEffect] with IBoardSide{
   /** Zone of close combat cards.
    * Stores close combat cards played.
    */
@@ -34,10 +35,6 @@ class BoardSide(private val name: String) extends IBoardSide {
    * Stores siege cards played.
    */
   private var SiegeZone:ArrayBuffer[Siege] = ArrayBuffer()
-
-  /**Array that stores all unit cards played.
-   */
-  private var CardsOnBoard:ArrayBuffer[IUnitCard] = ArrayBuffer()
 
   /**Provides the name of the board side.
    *
@@ -85,8 +82,10 @@ class BoardSide(private val name: String) extends IBoardSide {
    * BS.placeCard(new CloseCombat("Janissary", 100))
    * }}}
    */
-  override def placeCard(C: IUnitCard): Unit = {
+  override def placeCard(C: IUnitCard, O: Observer[IEffect]): Unit = {
     C.goToZone(this)
+    notifyObservers(C.getEffect())
+    addObserver(O)
   }
 
   /** Adds a given card to the close combat zone.
@@ -97,7 +96,6 @@ class BoardSide(private val name: String) extends IBoardSide {
    */
   override def addToCCzone(C: CloseCombat):Unit = {
     CCzone.append(C)
-    CardsOnBoard.append(C)
   }
 
   /** Adds a given card to the range zone.
@@ -108,7 +106,6 @@ class BoardSide(private val name: String) extends IBoardSide {
    */
   override def addToRangeZone(C: Range):Unit = {
     RangeZone.append(C)
-    CardsOnBoard.append(C)
   }
 
   /** Adds a given card to the siege zone.
@@ -119,22 +116,6 @@ class BoardSide(private val name: String) extends IBoardSide {
    */
   override def addToSiegeZone(C: Siege):Unit = {
     SiegeZone.append(C)
-    CardsOnBoard.append(C)
-  }
-
-  override def applyCCEffect(C:ICard): Unit = {
-    val Effect = C.getEffect()
-    Effect[CloseCombat](C,CCzone)
-  }
-
-  override def applyRangeEffect(C: ICard): Unit = {
-    val Effect = C.getEffect()
-    Effect[Range](C, RangeZone)
-  }
-
-  override def applySiegeEffect(C: ICard): Unit = {
-    val Effect = C.getEffect()
-    Effect[Siege](C, SiegeZone)
   }
 
   /** Provides the sum of the strength points of all cards played.
@@ -143,9 +124,9 @@ class BoardSide(private val name: String) extends IBoardSide {
    */
   def getPoints(): Int = {
     var sum: Int = 0
-    for (card <- CardsOnBoard) {
-      sum += card.getSP()
-    }
+    CCzone.foreach(C => sum += C.getSP())
+    RangeZone.foreach(C => sum += C.getSP())
+    SiegeZone.foreach(C => sum += C.getSP())
     sum
   }
 

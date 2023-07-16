@@ -5,6 +5,9 @@ import gwent.board.*
 import gwent.cards.*
 import gwent.player.*
 import gwent.effects.*
+
+import cl.uchile.dcc.gwent.cards.ref.CloseCombatRef
+
 import java.util.Objects
 
 /** Represents a Close Combat Unit Card
@@ -12,11 +15,10 @@ import java.util.Objects
  * Extends AbstractUnitCard
  */
 class CloseCombat(name:String,SP:Int) extends AbstractUnitCard(name,SP){
-  protected var effect: IUnitEffect = new NullEffect()
-
-  def this(name: String, SP:Int, Effect: IUnitEffect) = {
+  def this(name: String, SP:Int, Effect: IEffect) = {
     this(name,SP)
     effect = Effect
+    effect.setCard(this)
   }
   /** Tells to a BoardSide object that a Close Combat card was played.
    *
@@ -27,15 +29,23 @@ class CloseCombat(name:String,SP:Int) extends AbstractUnitCard(name,SP){
    */
   def goToZone(B: BoardSide): Unit = {
     B.addToCCzone(this)
-    B.applyCCEffect(this)
   }
+
+  override def typeCheck(C: IUnitCard): Boolean = {
+    C match {
+      case _: CloseCombat => true
+      case _ => false
+    }
+  }
+  override def callRef(): IUnitCard = CloseCombatRef
 
   override def equals(obj: Any): Boolean = {
     if (obj.isInstanceOf[CloseCombat]) {
       val other =obj.asInstanceOf[CloseCombat]
       (this eq other) ||
         other.getName() == name &&
-          other.getSP() == SP
+          other.getSP() == SP &&
+          other.getEffect() == effect
     }else{
       false
     }

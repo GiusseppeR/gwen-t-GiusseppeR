@@ -4,7 +4,7 @@ package gwent.cards
 import gwent.board.*
 import gwent.cards.*
 import gwent.player.*
-
+import gwent.observer.*
 import cl.uchile.dcc.gwent.effects.*
 
 /** Represents a Unit Card.
@@ -16,19 +16,28 @@ import cl.uchile.dcc.gwent.effects.*
  * @param SP Number of Strength Points.
  * @constructor Creates a card with a name and a number of Strength Points.
  */
-abstract class AbstractUnitCard(name:String, private var SP:Int) extends AbstractCard(name) with IUnitCard{
-  protected var effect: IUnitEffect
+abstract class AbstractUnitCard(name:String, private var SP:Int) extends AbstractCard(name) with IUnitCard with Observer[IEffect]{
+  private var stackedSP = SP
+  private var currentSP = SP
+  override def setSP(f: Int => Int):Unit ={
+    stackedSP = f(stackedSP)
+    currentSP = stackedSP
+  }
 
-  override def getEffect(): IEffect = effect
-  override def setSP(n:Int):Unit ={
-    SP = n
+  override def overrideSp(n: Int): Unit = {
+    currentSP = n
   }
   /** Provides the number of Strength Points associated with a Unit Card.
    *
    * @return The SP variable used in the constructor.
    */
   override def getSP(): Int = {
-    val clone = SP
+    val clone = currentSP
+    clone
+  }
+
+  override def getStackedSP(): Int = {
+    val clone = stackedSP
     clone
   }
 
@@ -44,12 +53,22 @@ abstract class AbstractUnitCard(name:String, private var SP:Int) extends Abstrac
    */
   override def sendCommand(P:Player): Unit = {
     try{
-      P.getBoardSide().placeCard(this)
+      val weatherEffect = P.getBoard().getCurrentWeatherCard().getEffect()
+      P.getBoardSide().placeCard(this,this)
+      P.getBoard().addObserver(this)
+      P.getBoard().notifyObservers(weatherEffect)
+
     }catch{
       case e:Exception => println("No board side")
     }
   }
 
   override def goToZone(B: BoardSide): Unit
+
+  override def typeCheck(C: IUnitCard): Boolean
+  override def callRef(): IUnitCard
+  override def update(subject: Subject[IEffect], value:IEffect):Unit = {
+    value(this)
+  }
 
 }
