@@ -23,10 +23,16 @@ class PlayerNotifiesControllerTest extends FunSuite{
     val activePlayers = Controller.getActivePlayerNames
     val defeatedPlayers = Controller.getDefeatedPlayerNames
     val playerMap = Controller.playerMap()
-    val JapanStatus = playerMap("Japan")(0)
+    val JapanGems = playerMap("Japan")
 
-    assertEquals("Defeated", JapanStatus)
+    assertEquals(0, JapanGems)
     assert(defeatedPlayers.contains("Japan"))
     assert(!activePlayers.contains("Japan"))
+  }
+  test("If a player passes, the  controller will update their status accordingly"){
+    Controller.User().get.pass()
+
+    assert(Controller.getPassedPlayerNames.contains("United States"))
+    assert(!Controller.getActivePlayerNames.contains("United States"))
   }
 }

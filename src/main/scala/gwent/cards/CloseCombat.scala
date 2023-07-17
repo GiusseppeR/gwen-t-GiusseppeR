@@ -3,6 +3,7 @@ package gwent.cards
 
 import gwent.board.*
 import gwent.cards.*
+import gwent.cards.ref.*
 import gwent.player.*
 import gwent.effects.*
 
@@ -15,6 +16,13 @@ import java.util.Objects
  * Extends AbstractUnitCard
  */
 class CloseCombat(name:String,SP:Int) extends AbstractUnitCard(name,SP){
+  /** Secondary constructor.
+   *  It allows the possibility to create cards with effects.
+   *
+   * @param name Name of the card.
+   * @param SP Strength Points of the card.
+   * @param Effect Effect of the card.
+   */
   def this(name: String, SP:Int, Effect: IEffect) = {
     this(name,SP)
     effect = Effect
@@ -31,13 +39,11 @@ class CloseCombat(name:String,SP:Int) extends AbstractUnitCard(name,SP){
     B.addToCCzone(this)
   }
 
-  override def typeCheck(C: IUnitCard): Boolean = {
-    C match {
-      case _: CloseCombat => true
-      case _ => false
-    }
-  }
-  override def callRef(): IUnitCard = CloseCombatRef
+  /** Calls its reference object.
+   *
+   * @return the CloseCombatRef singleton.
+   */
+  override def callRef(): Ref = CloseCombatRef
 
   override def equals(obj: Any): Boolean = {
     if (obj.isInstanceOf[CloseCombat]) {
@@ -50,7 +56,6 @@ class CloseCombat(name:String,SP:Int) extends AbstractUnitCard(name,SP){
       false
     }
   }
-
   override def hashCode(): Int = {
     Objects.hash(classOf[AbstractUnitCard], name, SP)
   }

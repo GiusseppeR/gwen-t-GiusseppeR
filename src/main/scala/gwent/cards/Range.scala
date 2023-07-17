@@ -3,6 +3,7 @@ package gwent.cards
 
 import gwent.board.*
 import gwent.cards.*
+import gwent.cards.ref.*
 import gwent.player.*
 import gwent.effects.*
 
@@ -15,6 +16,13 @@ import java.util.Objects
  * Extends UnitCard
  */
 class Range(name:String,SP:Int) extends AbstractUnitCard(name,SP) {
+  /** Secondary constructor.
+   * It allows the possibility to create cards with effects.
+   *
+   * @param name   Name of the card.
+   * @param SP     Strength Points of the card.
+   * @param Effect Effect of the card.
+   */
   def this(name: String, SP: Int, Effect: IEffect) = {
     this(name, SP)
     effect = Effect
@@ -31,14 +39,11 @@ class Range(name:String,SP:Int) extends AbstractUnitCard(name,SP) {
     B.addToRangeZone(this)
   }
 
-  override def callRef(): IUnitCard = RangeRef
-
-  override def typeCheck(C: IUnitCard): Boolean = {
-    C match {
-      case _: Range => true
-      case _ => false
-    }
-  }
+  /** Calls its reference object.
+   *
+   * @return the RangeRef singleton.
+   */
+  override def callRef(): Ref = RangeRef
 
   override def equals(obj: Any): Boolean = {
     if (obj.isInstanceOf[Range]) {

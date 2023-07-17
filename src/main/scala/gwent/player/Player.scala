@@ -6,7 +6,6 @@ import gwent.cards.*
 
 import cl.uchile.dcc.gwent.controller.Controller
 import cl.uchile.dcc.gwent.notifications.*
-import cl.uchile.dcc.gwent.states.player.*
 import gwent.observer.*
 import java.util.Objects
 import scala.collection.mutable.ArrayBuffer
@@ -33,7 +32,6 @@ import scala.util.Random
  * }}}
  */
 class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) extends AbstractSubject[PlayerControllerNotification] with Iplayer {
-  private var state:PlayerState = new Playing(this)
   /** Current state of the introduced deck.
    * Equal to the initial deck by default.
    */
@@ -154,7 +152,6 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
   override def takeDamage(): Unit = {
     Gems = Gems - 1
     if (Gems == 0){
-      state.toDefeated()
       notifyObservers(new PlayerDefeated(this))
     }
   }
@@ -220,14 +217,6 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
     }
     Hand ++= slice //slice is added to Hand
     deck --= slice  //slice is removed from deck
-  }
-
-  override def getState(): String= {
-    state.toString
-  }
-
-  override def setState(S: PlayerState): Unit = {
-    state = S
   }
 
   override def equals(obj: Any): Boolean = {

@@ -2,7 +2,7 @@ package cl.uchile.dcc
 package gwent.states
 
 import munit.FunSuite
-import gwent.states.controller.*
+import gwent.states.*
 import gwent.controller.*
 
 import cl.uchile.dcc.gwent.board.Board

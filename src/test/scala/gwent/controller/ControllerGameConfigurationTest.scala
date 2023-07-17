@@ -3,10 +3,11 @@ package gwent.controller
 
 import gwent.controller.*
 import gwent.cards.*
-import cl.uchile.dcc.gwent.states.controller.*
+
+import cl.uchile.dcc.gwent.states.*
 import munit.FunSuite
 
-class ControllerGameConfigurationScreenTest extends FunSuite{
+class ControllerGameConfigurationTest extends FunSuite{
   var Controller: Controller = _
 
   override def beforeEach(context: BeforeEach): Unit = {
@@ -30,13 +31,10 @@ class ControllerGameConfigurationScreenTest extends FunSuite{
     Controller.startGame()
 
     val UserName = Controller.getUserName()
-    val UserHand = Controller.showUserHand()
-    val UserGems = Controller.showUserGems()
 
     assertEquals("Japan", UserName)
-    assertEquals(10,UserHand.length)
-    assert(UserHand.isInstanceOf[List[ICard]])
-    assertEquals(2, UserGems)
+    assertEquals(10,Controller.User().get.currentHand().length)
+    assertEquals(2, Controller.User().get.remainingGems())
   }
   test("The controller can configure enemies and create them (with a random deck)"){
     Controller.newGame()
@@ -50,7 +48,7 @@ class ControllerGameConfigurationScreenTest extends FunSuite{
     assert(EnemyInfo.contains("Japan"))
     assert(EnemyInfo.contains("Germany"))
 
-    assertEquals(2, EnemyInfo("Japan")(1))
-    assertEquals(2,EnemyInfo("Germany")(1))
+    assertEquals(2, EnemyInfo("Japan"))
+    assertEquals(2,EnemyInfo("Germany"))
   }
 }

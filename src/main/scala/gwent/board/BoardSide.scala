@@ -16,6 +16,10 @@ import scala.collection.mutable.ArrayBuffer
  * Each board side is identified by its name.
  * A board side has three zones to store unit cards, one for each type (close combat, siege, range).
  *
+ * Part of an observer pattern.
+ * The board side is being observed by all the cards placed on it.
+ * Whenever a new unit card is placed, it notifies all the observers of the card and its effect.
+ *
  * @param name The name of the board side.
  *
  * @constructor Creates an empty board side with a name.
@@ -71,10 +75,11 @@ class BoardSide(private val name: String) extends AbstractSubject[IEffect] with 
 
   /** Gives the order to place a card in its relative zone.
    *
-   * Method for double dispatch. It might come out as redundant given the sendCommand and goToZone methods in the card classes,
-   * but it makes it a bit easier for the developer to test and control the board side.
+   * Method for double dispatch.
+   * It notifies the cards on the board side about the new card and its effect.
    *
    * @param C Card to be placed
+   * @param O Card to be added as an observer.
    *
    * @example
    * {{{

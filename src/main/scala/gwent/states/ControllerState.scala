@@ -1,14 +1,20 @@
 package cl.uchile.dcc
-package gwent.states.controller
+package gwent.states
 
 import gwent.board.*
 import gwent.cards.*
 import gwent.controller.*
 import gwent.player.*
-
-import cl.uchile.dcc.gwent.states.{InvalidFunctionException, *}
+import gwent.states.*
 
 import scala.collection.mutable.ListBuffer
+
+/** Represents a generic Controller State
+ *
+ * methods and transitions must be defined in subclasses, according to the state.
+ *
+ * @param context A controller as context.
+ */
 
 class ControllerState(private var context:Controller) extends State{
   def setNumberOfRandomEnemies(n:Int):Unit= throw InvalidFunctionException("This function cannot be used in this state")

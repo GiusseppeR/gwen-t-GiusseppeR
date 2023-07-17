@@ -1,7 +1,7 @@
 import cl.uchile.dcc.gwent
 import cl.uchile.dcc.gwent.controller.Controller
-import cl.uchile.dcc.gwent.states.InvalidTransitionException
-import cl.uchile.dcc.gwent.states.controller.*
+import cl.uchile.dcc.gwent.states.{EndOfRound, Idle, InvalidTransitionException, Passed}
+import cl.uchile.dcc.gwent.states.*
 import munit.FunSuite
 
 class PassedTest extends FunSuite{
@@ -29,9 +29,11 @@ class PassedTest extends FunSuite{
     intercept[InvalidTransitionException] {
       Passed.toGameConfiguration()
     }
-    Controller.setState(Passed)
-    Passed.toIdle()
-    assert(Controller.getState().isInstanceOf[Idle])
+
+    intercept[InvalidTransitionException] {
+      Passed.toIdle()
+    }
+
     Controller.setState(Passed)
     Passed.toEOR()
     assert(Controller.getState().isInstanceOf[EndOfRound])

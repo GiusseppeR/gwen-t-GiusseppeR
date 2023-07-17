@@ -16,6 +16,10 @@ import scala.collection.mutable.ArrayBuffer
  * A board has a zone to store weather cards,
  * and it can have an unlimited amount of players associated.
  *
+ * Part of an observer pattern.
+ * The Board is being observed by all the cards played by all players.
+ * Whenever a Weather Card is placed, it notifies the observers of the new effect in place.
+ *
  * No parameters required.
  *
  * @constructor Creates an empty board.
@@ -73,8 +77,7 @@ class Board extends AbstractSubject[IEffect] with IBoard {
    * @return Array with references to the players in board.
    */
   override def getPlayerList():ArrayBuffer[Player] = {
-    val clone = playerList
-
+    val clone = playerList.clone()
     clone
   }
 
@@ -129,7 +132,8 @@ class Board extends AbstractSubject[IEffect] with IBoard {
 
   /** Sets a new weather card in effect.
    *
-   * Given weather card, it sets it as the first element in weatherZone.
+   * Given a weather card, it sets it as the first element in weatherZone.
+   * It notifies all the cards en every BoardSide of the new effect in place.
    *
    * @param C Weather card to be placed.
    */

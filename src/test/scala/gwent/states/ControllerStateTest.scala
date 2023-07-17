@@ -1,7 +1,10 @@
+package cl.uchile.dcc
+package gwent.states
+
 import cl.uchile.dcc.gwent
 import cl.uchile.dcc.gwent.controller.Controller
-import cl.uchile.dcc.gwent.states.{InvalidFunctionException, InvalidTransitionException}
-import cl.uchile.dcc.gwent.states.controller.*
+import cl.uchile.dcc.gwent.states.{ControllerState, InvalidFunctionException, InvalidTransitionException}
+import cl.uchile.dcc.gwent.states.*
 import munit.FunSuite
 
 class ControllerStateTest extends FunSuite{

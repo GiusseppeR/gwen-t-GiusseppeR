@@ -1,7 +1,9 @@
+package cl.uchile.dcc
+package gwent.states
+
 import cl.uchile.dcc.gwent
 import cl.uchile.dcc.gwent.controller.Controller
-import cl.uchile.dcc.gwent.states.InvalidTransitionException
-import cl.uchile.dcc.gwent.states.controller.*
+import cl.uchile.dcc.gwent.states.*
 import munit.FunSuite
 
 class EndOfRoundTest extends FunSuite{
@@ -43,8 +45,11 @@ class EndOfRoundTest extends FunSuite{
     EndOfRound.finishRound()
 
     val PlayerMap = Controller.playerMap()
-    assertEquals(1,Controller.showUserGems())
+    assertEquals(1,PlayerMap("Germany"))
     assert(Controller.getState().isInstanceOf[Idle])
+
+    assert(Controller.getActivePlayers.contains(Controller.User().get))
+    assert(!Controller.getPassedPlayers.contains(Controller.User().get))
   }
   test("If the player loses, the EOR state makes the controller go to the Main Menu state"){
     Controller.destroy("Germany")

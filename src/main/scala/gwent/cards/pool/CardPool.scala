@@ -11,7 +11,20 @@ import gwent.effects.unit.*
 import scala.collection.mutable
 import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 
+/** Represents a standard pool of cards.
+ *
+ *  Defines the information of all the cards meant to be used in the game as follows:
+ *  val CardInfo = (Name, SP, Effect)
+ *  For weather cards, SP is set to 0.
+ *
+ *  Uses the card factories to actually create the cards.
+ *
+ *  Used by the GameConfiguration state in Controller.
+ *  Each player is meant to have its own pool of cards.
+ *
+ */
 class CardPool {
+
   private val TightBond:IEffect = new TightBondEffect()
   private val MoraleBoost:IEffect = new MoraleBoostEffect()
   private val MoraleBoostCC:IEffect = new MoraleBoostEffect(CloseCombatRef)
@@ -47,6 +60,8 @@ class CardPool {
   private val Summer:(String,Int,IEffect) = ("Summer",0,torrentialRain)
   private val Spring:(String,Int,IEffect) = ("Spring",0,clearWeather)
 
+  /** Assigns each card a number, representing their frequency (and amount left) in the standard deck.
+   */
   private var Pool: mutable.Map[(String,Int,IEffect), Int] = mutable.Map(
     Infantry -> 4,
     Grenadiers -> 2,
@@ -63,6 +78,9 @@ class CardPool {
     Summer -> 2,
     Spring -> 1
   )
+
+  /** Associates each card with a factory.
+   */
   private var productionAssignation:mutable.Map[(String,Int,IEffect), CardFactory[ICard]] = mutable.Map(
     Infantry -> CCFactory,
     Grenadiers -> CCFactory,
@@ -80,6 +98,18 @@ class CardPool {
     Spring -> WeatherFactory
   )
 
+  /** Adds a card to an array.
+   *
+   * Takes an arrayBuffer of cards and a 3-tuple with the information of the card to be added,
+   * and proceeds to include it in the array.
+   *
+   * When a card is added to an array, it reduces its number associated in the Pool variable by one.
+   * If the card information indicated has a 0 assigned in Pool, it does nothing.
+   *
+   * @param list ArrayBuffer of cards. Destiny of the card.
+   * @param info Information of the card to be added.
+   * @return A boolean, indicating if the addition was succesful.
+   */
   def addToDeck(list:ArrayBuffer[ICard], info: (String,Int,IEffect) ): Boolean = {
     val check = productionAssignation.contains(info)
 
@@ -98,14 +128,33 @@ class CardPool {
     }
   }
 
+  /** Provides a list with all the cards in the pool.
+   *
+   * @return A list with the information of all the cards in the pool.
+   */
   def getCardsInfo: List[(String,Int,IEffect)] = {
     Pool.keys.toList
   }
 
+  /** Provides a copy of the Pool variable.
+   *
+   * @return A copy of the Pool variable.
+   */
   def getCardMap: Map[(String,Int,IEffect),Int] = Pool.toMap
 
+  /** Provides a new CardPool.
+   *
+   * @return A new CardPool
+   */
   def copy:CardPool = new CardPool()
 
+  /** Generic base for adding new cards to the pool.
+   *
+   * @param info Information of the new card.
+   * @param n Frequency of the card.
+   * @param factory Card Factory associated.
+   * @tparam T Type of the factory
+   */
   protected def addCard[T <:CardFactory[ICard] ](info: (String, Int, IEffect), n: Int, factory:T): Unit = {
     val check = Pool.contains(info)
     if (check){
@@ -116,22 +165,49 @@ class CardPool {
     }
   }
 
+  /** Method for adding weather cards.
+   *
+   * @param info Information of the card.
+   * @param n Amount to be added.
+   */
   def addWeatherCard(info: (String, Int, IEffect), n: Int):Unit = {
     addCard[WeatherFactory](info,n,WeatherFactory)
   }
 
+  /** Method for adding close combat cards.
+   *
+   * @param info Information of the card.
+   * @param n    Amount to be added.
+   */
   def addCloseCombatCard(info: (String, Int, IEffect), n: Int): Unit = {
     addCard[CloseCombatFactory](info, n, CCFactory)
   }
 
+  /** Method for adding range cards.
+   *
+   * @param info Information of the card.
+   * @param n    Amount to be added.
+   */
   def addRangeCard(info: (String, Int, IEffect), n: Int): Unit = {
     addCard[RangeFactory](info, n, rangeFactory)
   }
 
+  /** Method for adding siege cards.
+   *
+   * @param info Information of the card.
+   * @param n    Amount to be added.
+   */
   def addSiegeCard(info: (String, Int, IEffect), n: Int): Unit = {
     addCard[SiegeFactory](info, n, SiegeFactory)
   }
 
+  /** Removes a card from the pool entirely or by an amount.
+   *
+   * Unused.
+   *
+   * @param info Information of the card.
+   * @param n amount of cards to remove. If 0, the card gets entirely removed from the pool.
+   * */
   def removeFromPool(info: (String, Int, IEffect), n: Int = 0): Unit = {
     if (n == 0){
       Pool.remove(info)

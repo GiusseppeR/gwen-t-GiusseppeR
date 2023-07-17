@@ -1,7 +1,10 @@
+package cl.uchile.dcc
+package gwent.states
+
 import cl.uchile.dcc.gwent
 import cl.uchile.dcc.gwent.controller.Controller
-import cl.uchile.dcc.gwent.states.InvalidTransitionException
-import cl.uchile.dcc.gwent.states.controller.*
+import cl.uchile.dcc.gwent.states.{CardSelection, Idle, InvalidTransitionException}
+import cl.uchile.dcc.gwent.states.*
 import munit.FunSuite
 
 class CardSelectionTest extends FunSuite{
@@ -16,11 +19,9 @@ class CardSelectionTest extends FunSuite{
     intercept[InvalidTransitionException]{
       CardSelection.toCardSelection()
     }
-
     intercept[InvalidTransitionException]{
       CardSelection.toEOR()
     }
-
     intercept[InvalidTransitionException] {
       CardSelection.toGameConfiguration()
     }
@@ -34,14 +35,26 @@ class CardSelectionTest extends FunSuite{
     CardSelection.toIdle()
     assert( Controller.getState().isInstanceOf[Idle])
   }
+
   test("In the CardSelection state, the player can play a card"){
+    Controller.newGame()
+    Controller.startGame()
     Controller.selectCard()
     val User = Controller.User().get
-    val card = User.currentHand()(6)
+    val card = User.currentHand()(5)
+    var cardAmount:Int = 0
+    var newCardAmount:Int = 0
+
+    for(Card<-User.currentHand()){
+      if card == Card then cardAmount= cardAmount + 1
+    }
 
     CardSelection.playCard(5)
+    for (Card <- User.currentHand()) {
+      if card == Card then newCardAmount = newCardAmount + 1
+    }
 
     assertEquals(User.currentHand().length,9)
-    assertEquals(card,User.currentHand()(5))
+    assertEquals(newCardAmount+1, cardAmount)
   }
 }

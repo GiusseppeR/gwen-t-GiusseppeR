@@ -3,6 +3,7 @@ package gwent.cards
 
 import gwent.board.*
 import gwent.cards.*
+import gwent.cards.ref.*
 import gwent.player.*
 
 import cl.uchile.dcc.gwent.effects.*
@@ -18,6 +19,5 @@ trait IUnitCard extends ICard{
   def getSP():Int
   def getStackedSP():Int
   def goToZone(B: BoardSide):Unit
-  def typeCheck(C:IUnitCard):Boolean
-  def callRef():IUnitCard
+  def callRef():Ref
 }

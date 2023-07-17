@@ -13,6 +13,13 @@ import java.util.Objects
  * Extends AbstractUnitCard
  */
 class Siege(name:String,SP:Int) extends AbstractUnitCard(name,SP){
+  /** Secondary constructor.
+   * It allows the possibility to create cards with effects.
+   *
+   * @param name   Name of the card.
+   * @param SP     Strength Points of the card.
+   * @param Effect Effect of the card.
+   */
   def this(name: String, SP: Int, Effect: IEffect) = {
     this(name, SP)
     effect = Effect
@@ -28,13 +35,12 @@ class Siege(name:String,SP:Int) extends AbstractUnitCard(name,SP){
   def goToZone(B: BoardSide): Unit = {
     B.addToSiegeZone(this)
   }
-  override def typeCheck(C: IUnitCard): Boolean = {
-    C match {
-      case _:Siege => true
-      case _ => false
-    }
-  }
-  override def callRef(): IUnitCard = SiegeRef
+
+  /** Calls its reference object.
+   *
+   * @return the SiegeRef singleton.
+   */
+  override def callRef(): Ref = SiegeRef
   override def equals(obj: Any): Boolean = {
     if (obj.isInstanceOf[Siege]) {
       val other = obj.asInstanceOf[Siege]

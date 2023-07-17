@@ -5,13 +5,18 @@ import gwent.states.*
 
 import cl.uchile.dcc.gwent.notifications.PlayerControllerNotification
 import cl.uchile.dcc.gwent.player.*
-import cl.uchile.dcc.gwent.states.controller.ControllerState
 import gwent.board.*
+
 import scala.collection.mutable.Map
 import gwent.cards.*
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
+
+/**
+ * Defines a controller.
+ * Methods must be defined in class.
+ */
 trait IController {
   def newGame():Unit
   def goToMenu():Unit
@@ -27,9 +32,7 @@ trait IController {
   def getActivePlayers:ListBuffer[Player]
   def getPassedPlayers:ListBuffer[Player]
   def getUserName(): String
-  def showUserHand(): List[ICard]
-  def showUserGems(): Int
-  def playerMap():mutable.Map[String,(String,Int)]
+  def playerMap():mutable.Map[String,Int]
   def getState():ControllerState
   def setState(C: ControllerState): Unit
   def moveToActive(P:Player):Unit
