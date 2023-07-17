@@ -13,6 +13,7 @@ class PlayerNotifiesControllerTest extends FunSuite{
   override def beforeEach(context: BeforeEach): Unit = {
     Controller = new Controller()
     Controller.newGame()
+    Controller.setPlayerName("United States")
     Controller.setEnemyName("Japan")
     Controller.startGame()
   }

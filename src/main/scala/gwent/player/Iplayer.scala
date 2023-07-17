@@ -23,6 +23,7 @@ trait Iplayer {
   def takeDamage():Unit
   def currentHand(): ArrayBuffer[ICard]
   def playCard(C:ICard): Unit
+  def pass():Unit
   def takeCard(n:Int):Unit
   def shuffleDeck():Unit
   def setBoard(board:Board):Unit

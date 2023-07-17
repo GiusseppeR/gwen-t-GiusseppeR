@@ -40,7 +40,7 @@ class ControllerGameConfigurationScreenTest extends FunSuite{
   }
   test("The controller can configure enemies and create them (with a random deck)"){
     Controller.newGame()
-    Controller.numberOfEnemies(2)
+    Controller.numberOfRandomEnemies(2)
     Controller.setEnemyName("Japan")
     Controller.setEnemyName("Germany")
     Controller.startGame()

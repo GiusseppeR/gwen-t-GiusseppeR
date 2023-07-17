@@ -6,27 +6,30 @@ import gwent.cards.*
 import gwent.controller.*
 import gwent.player.*
 
-import cl.uchile.dcc.gwent.states.*
+import cl.uchile.dcc.gwent.states.{InvalidFunctionException, *}
 
 import scala.collection.mutable.ListBuffer
 
 class ControllerState(private var context:Controller) extends State{
-  def Comply():Unit = {}
-  def setNumberOfEnemies(n:Int):Unit = {}
-  def setName(name:String):Unit = {}
-  def setEnemy(name:String):Unit = {}
-  def startGame():ListBuffer[Player] = ListBuffer()
+  def setNumberOfRandomEnemies(n:Int):Unit= throw InvalidFunctionException("This function cannot be used in this state")
+  def setPlayerName(name:String):Unit = throw InvalidFunctionException("This function cannot be used in this state")
+  def setEnemy(name:String):Unit = throw InvalidFunctionException("This function cannot be used in this state")
+  def gameStartSettings:(Player,ListBuffer[Player]) = {
+    throw InvalidFunctionException("This function cannot be used in this state")
+  }
+  def pass():Unit = throw InvalidFunctionException("This function cannot be used in this state")
+  def playCard(n:Int):Unit = throw InvalidFunctionException("This function cannot be used in this state")
+  def finishRound():Unit = throw InvalidFunctionException("This function cannot be used in this state")
+  def transition():Unit = throw InvalidFunctionException("This function cannot be used in this state")
   def toMainMenu():Unit = {
     transitionError("Main Menu")
   }
   def toGameConfiguration(): Unit = {
    transitionError("GameConfiguration")
   }
-
-  def toGameStart(): Unit = {
-    transitionError("toGameStart")
+  def toCardSelection():Unit = {
+    transitionError("CardSelection")
   }
-
   def toIdle(): Unit = {
     transitionError("toFirst")
   }
@@ -34,17 +37,8 @@ class ControllerState(private var context:Controller) extends State{
   def toPassed(): Unit = {
     transitionError("Passed")
   }
-
   def toEOR(): Unit = {
     transitionError("EndOfRound")
-  }
-
-  def toRoundStart(): Unit = {
-    transitionError("RoundStart")
-  }
-
-  def toEndOfGame(): Unit = {
-    transitionError("EndOfGame")
   }
 
 }

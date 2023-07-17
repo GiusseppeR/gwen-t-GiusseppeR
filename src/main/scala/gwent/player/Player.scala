@@ -183,7 +183,11 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
       val index = Hand.indexOf(C)
       Hand.remove(index)
       C.sendCommand(this)
+      if Hand.isEmpty then pass()
     }
+  }
+  override def pass():Unit = {
+    notifyObservers(new PlayerPassed(this))
   }
 
   /** Takes a number of cards from the deck and adds them to the player hand.
