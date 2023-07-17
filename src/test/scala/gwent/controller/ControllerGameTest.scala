@@ -9,6 +9,7 @@ class ControllerGameTest extends FunSuite{
   override def beforeEach(context: BeforeEach): Unit = {
     Controller = new Controller()
     Controller.newGame()
+    Controller.setPlayerName("Chile")
     Controller.startGame()
   }
   test("In the game, the user can choose to select a card or pass"){
