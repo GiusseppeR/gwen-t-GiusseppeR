@@ -79,7 +79,7 @@ abstract class AbstractUnitCard(name:String, private var SP:Int) extends Abstrac
       P.getBoard().notifyObservers(weatherEffect)
 
     }catch{
-      case e:Exception => println("No board side")
+      case e:NoSuchElementException => println("No board side")
     }
   }
 

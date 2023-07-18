@@ -6,6 +6,8 @@ import gwent.player.*
 import gwent.board.*
 
 import cl.uchile.dcc.gwent.effects.IEffect
+import cl.uchile.dcc.gwent.effects.weather.ClearWeatherEffect
+import cl.uchile.dcc.gwent.exceptions.NoBoardSideException
 import cl.uchile.dcc.gwent.observer.AbstractSubject
 
 import scala.collection.mutable.ArrayBuffer
@@ -41,7 +43,7 @@ class Board extends AbstractSubject[IEffect] with IBoard {
   /** Stores the weather cards played.
    * Has a Clear Weather card in as default.
    */
-  private var weatherZone:ArrayBuffer[WeatherCard] = ArrayBuffer(new WeatherCard("Clear Weather"))
+  private var weatherZone:ArrayBuffer[WeatherCard] = ArrayBuffer()
 
   /**Stores references to the players in the board
    */
@@ -61,14 +63,14 @@ class Board extends AbstractSubject[IEffect] with IBoard {
       /* first, the method verifies if it can actually add the player and put them in sideName*/
       for (player <- playerList) {
         if (P.equals(player) || sideName == player.getBoardSide().getName()) throw
-          new Exception()
+          new NoBoardSideException()
       }
       /*If no exception is thrown, then proceeds*/
       P.setBoard(this)                          /*player methods*/
       P.setBoardSide(new BoardSide(sideName))
       playerList += P
     }catch{ /*exception handler*/
-      case a:Exception => print("Invalid placement. Board side taken or player already in board")
+      case a:NoBoardSideException => print("Invalid placement. Board side taken or player already in board")
     }
   }
 
@@ -125,9 +127,12 @@ class Board extends AbstractSubject[IEffect] with IBoard {
    * @return first element of weatherZone
    */
   override def getCurrentWeatherCard(): WeatherCard = {
-    val clone = weatherZone(0)
-
-    clone
+    try{
+      val clone = weatherZone(0)
+      clone
+    }catch{
+      case e: IndexOutOfBoundsException => new WeatherCard("Spring", new ClearWeatherEffect())
+    }
   }
 
   /** Sets a new weather card in effect.

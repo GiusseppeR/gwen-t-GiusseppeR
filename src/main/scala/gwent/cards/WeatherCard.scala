@@ -29,7 +29,7 @@ class WeatherCard(name:String) extends AbstractCard(name){
     try{
       P.getBoard().setWeatherCard(this)
     } catch{
-      case e:Exception => println("No Board")
+      case e:NoSuchElementException => println("No Board")
     }
   }
 

@@ -6,6 +6,7 @@ import gwent.cards
 import gwent.cards.*
 import gwent.player.*
 
+import cl.uchile.dcc.gwent.exceptions.NegativeAmountException
 import munit.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
@@ -105,12 +106,17 @@ class PlayerTest extends FunSuite {
   test("The deck size of the players should decrease in size when they take cards") {
     val expected = 0
 
+    Player1.takeCard(-1) //it does nothing
+
+    assertEquals(Player1.getDeck().length, 1)
+
     Player1.playCard(Card1)
     Player2.playCard(Card11)
     Player1.takeCard(1)
     Player2.takeCard(1)
     assertEquals(Player1.getDeck().length, expected)
     assertEquals(Player2.getDeck().length, expected)
+
   }
   test("Players shouldn't be able to take more cards than the amount available in the deck"){
     val expected = 9

@@ -7,6 +7,9 @@ import gwent.cards.*
 import cl.uchile.dcc.gwent.controller.Controller
 import cl.uchile.dcc.gwent.notifications.*
 import gwent.observer.*
+
+import cl.uchile.dcc.gwent.exceptions.NegativeAmountException
+
 import java.util.Objects
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
@@ -197,26 +200,31 @@ class Player(private val name:String, private var initDeck:ArrayBuffer[ICard]) e
    * @param n Number of cards taken.
    */
   override def takeCard(n: Int): Unit = {
-    val handSize:Int = Hand.length //number of cards in Hand
-    val deckLast = deck.length-1 //Index of the last element in deck
-    //slice: Array of cards to be taken (a sub-array of deck)
-    var slice: ArrayBuffer[ICard] = ArrayBuffer()
-    // k is an auxiliary variable, it (sort of) represents the amount of cards actually taken
-    var k:Int = n
-    //We impose that Hand cannot have more than 10 cards
-    if(k+handSize > 10){
-      k = 10-handSize // k is adjusted accordingly
+    try{
+      if n <0 then throw new NegativeAmountException()
+      val handSize: Int = Hand.length //number of cards in Hand
+      val deckLast = deck.length - 1 //Index of the last element in deck
+      //slice: Array of cards to be taken (a sub-array of deck)
+      var slice: ArrayBuffer[ICard] = ArrayBuffer()
+      // k is an auxiliary variable, it (sort of) represents the amount of cards actually taken
+      var k: Int = n
+      //We impose that Hand cannot have more than 10 cards
+      if (k + handSize > 10) {
+        k = 10 - handSize // k is adjusted accordingly
+      }
+      //If the amount of cards requested is bigger than the available, then slice = deck
+      if (k >= deckLast + 1) {
+        slice = deck
+      }
+      //otherwise, slice is created using the slice() method of ArrayBuffer
+      else {
+        slice = deck.slice(deckLast - k, deckLast) //the last k cards from deck
+      }
+      Hand ++= slice //slice is added to Hand
+      deck --= slice //slice is removed from deck
+    }catch {
+      case e:NegativeAmountException => println("Please choose a positive number.")
     }
-    //If the amount of cards requested is bigger than the available, then slice = deck
-    if (k >= deckLast + 1) {
-      slice = deck
-    }
-    //otherwise, slice is created using the slice() method of ArrayBuffer
-    else {
-      slice = deck.slice(deckLast - k, deckLast) //the last k cards from deck
-    }
-    Hand ++= slice //slice is added to Hand
-    deck --= slice  //slice is removed from deck
   }
 
   override def equals(obj: Any): Boolean = {

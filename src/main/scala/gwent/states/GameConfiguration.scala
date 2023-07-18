@@ -9,12 +9,17 @@ import gwent.player.*
 import gwent.player.factories.*
 import gwent.states.{ControllerState, Idle, MainMenu}
 
+import cl.uchile.dcc.gwent.exceptions.{InvalidNameException, NegativeAmountException, NoPlayerNameException}
+
 import scala.collection.mutable
 import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 import scala.util.Random
 
 /** Game configuration state.
  * The user can select a number of random enemies, set enemy names, set player name and start a game.
+ *
+ * If no enemies are set, then the game starts with a random enemy.
+ * If no player name is set, then the game starts with a random name from a pool of names.
  *
  * @param context A controller as context.
  */
@@ -33,10 +38,20 @@ class GameConfiguration(context:Controller) extends ControllerState(context){
 
   /** Puts a number of random enemies to the queue.
    *
+   * It can select names from the namePool that are not in the queue
+   * and are not equal to the player name.
+   *
+   * if the number of random enemies set is higher than the number of possible enemies, it
+   * just creates all the enemies it can.
+   *
    * @param n Number of random enemies.
    */
   private def selectRandomEnemies(n: Int): Unit = {
-    val names = Random.shuffle(namePool).slice(0, n)
+    var filter = namePool.filter(p => !ChosenEnemies.contains(p))
+    if PlayerName.isDefined then filter = filter.filter(p => p != PlayerName.get)
+    var enemies = n
+    if filter.length < n then enemies = filter.length
+    val names = Random.shuffle(filter).slice(0, enemies)
     ChosenEnemies.enqueueAll(names)
   }
 
@@ -69,15 +84,30 @@ class GameConfiguration(context:Controller) extends ControllerState(context){
    * @param n number of random enemies.
    */
   override def setNumberOfRandomEnemies(n: Int): Unit = {
-    numberOfRandomEnemies = n
+    try{
+      if n < 0 then throw new NegativeAmountException()
+      numberOfRandomEnemies = n
+    }catch {
+      case e:NegativeAmountException => print("Please introduce a positive number.")
+    }
   }
 
   /**Adds a name to the enemy queue.
    *
+   * If the name is already in the queue, it prints a warning and does nothing.
+   *
    * @param name Name of the enemy to be added.
    */
   override def setEnemy(name: String): Unit = {
-    ChosenEnemies.enqueue(name)
+    try{
+      if ChosenEnemies.contains(name) then throw new InvalidNameException()
+      if (PlayerName.isDefined) {
+        if PlayerName.get == name then throw new InvalidNameException()
+      }
+      ChosenEnemies.enqueue(name)
+    } catch {
+      case e:InvalidNameException => println("Invalid enemy name, please try another one.")
+    }
   }
 
   /**Creates enemies according the variables set.
@@ -86,7 +116,7 @@ class GameConfiguration(context:Controller) extends ControllerState(context){
    * Uses the player factory.
    */
   private def createEnemies(): Unit = {
-    if ChosenEnemies.isEmpty && numberOfRandomEnemies == 0 then numberOfRandomEnemies += 1
+    if ChosenEnemies.isEmpty && numberOfRandomEnemies <= 0 then numberOfRandomEnemies += 1
     selectRandomEnemies(numberOfRandomEnemies)
     while (ChosenEnemies.nonEmpty) {
       val name = ChosenEnemies.dequeue
@@ -97,8 +127,15 @@ class GameConfiguration(context:Controller) extends ControllerState(context){
     }
   }
 
+  /** Sets the player name.
+   *
+   * If an enemy already has that name, it prints a warning and does nothing.
+   *
+   * @param name Name of the player.
+   */
+
   override def setPlayerName(name: String): Unit = {
-    PlayerName = Some(name)
+      if !ChosenEnemies.contains(name) then PlayerName = Some(name)
   }
 
   /**Provides a shuffled list with the players and a reference to the user's player.
@@ -106,14 +143,21 @@ class GameConfiguration(context:Controller) extends ControllerState(context){
    * Calls the createEnemies() method and creates a player with the information set by the user.
    * It also adds every player to a board.
    *
+   * It no player name is set, it chooses a random name from the namePool. If it can't, then throws an exception.
+   * Exception handled in startGame method (controller).
+   *
    *
    * @return List with the players and a reference to the user's player.
    */
   override def gameStartSettings: (Player, ListBuffer[Player]) = {
+    if namePool.forall(p => ChosenEnemies.contains(p)) then throw new NoPlayerNameException()
+    while(PlayerName.isEmpty){
+      val name = Random.shuffle(namePool).head
+      setPlayerName(name)
+    }
     createEnemies()
-    val name = PlayerName.getOrElse(Random.shuffle(namePool).head)
     val deck = createDeck()
-    val Player = new Player(name, deck)
+    val Player = new Player(PlayerName.get, deck)
     User = Some(Player)
     PlayerList.prepend(Player)
 

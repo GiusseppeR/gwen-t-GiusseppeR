@@ -6,6 +6,7 @@ import gwent.cards.*
 import gwent.player.*
 import gwent.states.*
 
+import cl.uchile.dcc.gwent.exceptions.NoPlayerNameException
 import cl.uchile.dcc.gwent.notifications.*
 import cl.uchile.dcc.gwent.observer.*
 
@@ -98,12 +99,16 @@ class Controller extends IController with Observer[PlayerControllerNotification]
    * sets the playerList, user and activePlayers variable.
    */
   override def startGame(): Unit = {
-    val settings = state.gameStartSettings
-    playerList = settings(1)
-    user = Some(settings.head)
-    playerList.foreach(p => p.addObserver(this) )
-    activePlayers ++= playerList
-    state.toIdle()
+    try{
+      val settings = state.gameStartSettings
+      playerList = settings(1)
+      user = Some(settings.head)
+      playerList.foreach(p => p.addObserver(this))
+      activePlayers ++= playerList
+      state.toIdle()
+    }catch{
+      case e:NoPlayerNameException => println("No player name was chosen, please choose one.")
+    }
   }
 
   /** Goes from Idle state to CardSelection state or Passed state,

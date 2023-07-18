@@ -6,6 +6,7 @@ import gwent.cards
 import gwent.cards.*
 import gwent.player.*
 
+import cl.uchile.dcc.gwent.effects.weather.ClearWeatherEffect
 import munit.FunSuite
 import org.junit.internal.runners.statements.ExpectException
 
@@ -78,7 +79,7 @@ class BoardTest extends FunSuite {
   }
 
   test("When a weather card is placed, it should be added to the 'Weather zone' and replace the current one"){
-    val default:WeatherCard = new WeatherCard("Clear Weather")
+    val default:WeatherCard = new WeatherCard("Spring", new ClearWeatherEffect())
     assertEquals(Board.getCurrentWeatherCard(),default)
 
     Board.setWeatherCard(Card4)

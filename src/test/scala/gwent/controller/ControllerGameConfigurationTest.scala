@@ -47,8 +47,20 @@ class ControllerGameConfigurationTest extends FunSuite{
 
     assert(EnemyInfo.contains("Japan"))
     assert(EnemyInfo.contains("Germany"))
-
+    assertEquals(5,EnemyInfo.size)
     assertEquals(2, EnemyInfo("Japan"))
     assertEquals(2,EnemyInfo("Germany"))
+  }
+  test("If all possible enemies where chosen and the player didn't choose a name, the controller doesn't start the game"){
+    Controller.newGame()
+    Controller.setEnemyName("Germany")
+    Controller.setEnemyName("Japan")
+    Controller.setEnemyName("Soviet Union")
+    Controller.setEnemyName("United States of America")
+    Controller.setEnemyName("Great Britain")
+
+    Controller.startGame()
+
+    assert(Controller.getState().isInstanceOf[GameConfiguration])
   }
 }
