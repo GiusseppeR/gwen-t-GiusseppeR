@@ -38,6 +38,7 @@ class EndOfRound(context:Controller) extends ControllerState(context) {
       context.setState(new MainMenu(context))
       context.reset()
     }else{
+      passed.foreach(p => p.takeCard(3))
       passed.foreach(p => context.moveToActive(p))
       context.setState(new Idle(context))
     }
